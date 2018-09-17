@@ -82,6 +82,17 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        window.$.ajax({
+            type: 'GET',
+            url: 'api/user',
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (xhr) {
+                console.error(xhr.responseText);
+            }
+        });
     </script>
 </body>
 </html>
