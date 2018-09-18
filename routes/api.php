@@ -16,3 +16,17 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::pattern('user', '^\d+$');
+//Route::resource('user', 'UserController');
+Route::group(['prefix' => 'users', 'name' => 'users.'], function () {
+    Route::get('/', 'UserController@index')->name('index');
+    Route::get('/{user}', 'UserController@show')->name('show');
+    Route::get('/create', 'UserController@create')->name('create');
+    Route::post('/', 'UserController@store')->name('store');
+    Route::get('/{user}/edit', 'UserController@edit')->name('edit');
+    Route::put('/{user}', 'UserController@update')->name('update');
+    Route::put('/{user}/trash', 'UserController@trash')->name('trash');
+    Route::put('/{user}/restore', 'UserController@restore')->name('restore');
+    Route::delete('/{user}/destroy', 'UserController@destroy')->name('destroy');
+});
