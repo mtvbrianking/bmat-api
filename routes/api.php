@@ -18,7 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::pattern('user', '^\d+$');
-//Route::resource('user', 'UserController');
 Route::group(['prefix' => 'users', 'name' => 'users.'], function () {
     Route::get('/', 'UserController@index')->name('index');
     Route::get('/{user}', 'UserController@show')->name('show');
