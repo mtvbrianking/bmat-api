@@ -22,7 +22,7 @@ Route::group(['prefix' => 'users', 'name' => 'users.'], function () {
     Route::get('/', 'UserController@index')->name('index');
     Route::get('/{user}', 'UserController@show')->name('show');
     Route::get('/create', 'UserController@create')->name('create');
-    Route::post('/', 'UserController@store')->name('store');
+    Route::post('/', 'UserController@store')->middleware('auth.client')->name('store');
     Route::get('/{user}/edit', 'UserController@edit')->name('edit');
     Route::put('/{user}', 'UserController@update')->name('update');
     Route::put('/{user}/trash', 'UserController@trash')->name('trash');
