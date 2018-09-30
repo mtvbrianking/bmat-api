@@ -26,7 +26,7 @@ class UserTest extends TestCase
             ->withHeaders([
                 'Accept' => 'application/json',
             ])
-            ->json('GET', 'api/users', []);
+            ->json('GET', 'api/v1/users', []);
 
         $response->assertStatus(200);
     }
@@ -41,7 +41,7 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
 
         $response = $this->actingAs($user, 'api')
-            ->json('GET', 'api/users/create');
+            ->json('GET', 'api/v1/users/create');
 
         $response->assertStatus(501);
     }
@@ -58,7 +58,7 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
 
         $response = $this->actingAs($user, 'api')
-            ->json('POST', 'api/users', [
+            ->json('POST', 'api/v1/users', [
                 'name' => 'John Doe',
                 'email' => 'jdoe@example.com',
                 'password' => '!B>z5RJ%dUE$F52_',
@@ -78,7 +78,7 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
 
         $response = $this->actingAs($user, 'api')
-            ->json('GET', 'api/users/' . $user->id);
+            ->json('GET', 'api/v1/users/' . $user->id);
 
         $response->assertStatus(200);
     }
@@ -101,7 +101,7 @@ class UserTest extends TestCase
         ]);
 
         $response = $this->actingAs($user, 'api')
-            ->json('POST', 'api/users/auth', [
+            ->json('POST', 'api/v1/users/auth', [
                 'email' => 'jdoe@example.com',
                 'password' => 'gJrFhC2B-!Y!4CTk',
             ]);
@@ -119,7 +119,7 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
 
         $response = $this->actingAs($user, 'api')
-            ->json('GET', 'api/users/' . $user->id . '/edit');
+            ->json('GET', 'api/v1/users/' . $user->id . '/edit');
 
         $response->assertStatus(501);
     }
@@ -134,7 +134,7 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
 
         $response = $this->actingAs($user, 'api')
-            ->json('PUT', 'api/users/' . $user->id, [
+            ->json('PUT', 'api/v1/users/' . $user->id, [
                 'name' => 'John Doe',
                 'email' => 'jdoe@example.com',
                 'email_verified_at' => date('Y-m-d H:i:s'),
@@ -157,7 +157,7 @@ class UserTest extends TestCase
         ]);
 
         $response = $this->actingAs($user, 'api')
-            ->json('PUT', 'api/users/' . $user->id . '/profile', [
+            ->json('PUT', 'api/v1/users/' . $user->id . '/profile', [
                 'name' => 'John Doe',
                 'email' => 'jdoe@example.com',
                 'current_password' => 'gJrFhC2B-!Y!4CTk',
@@ -179,7 +179,7 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
 
         $response = $this->actingAs($user, 'api')
-            ->json('PUT', 'api/users/' . $user->id . '/trash');
+            ->json('PUT', 'api/v1/users/' . $user->id . '/trash');
 
         $response->assertStatus(200);
     }
@@ -194,7 +194,7 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
 
         $response = $this->actingAs($user, 'api')
-            ->json('PUT', 'api/users/' . $user->id . '/restore');
+            ->json('PUT', 'api/v1/users/' . $user->id . '/restore');
 
         $response->assertStatus(404);
     }
@@ -211,7 +211,7 @@ class UserTest extends TestCase
         $user->delete();
 
         $response = $this->actingAs($user, 'api')
-            ->json('PUT', 'api/users/' . $user->id . '/restore');
+            ->json('PUT', 'api/v1/users/' . $user->id . '/restore');
 
         $response->assertStatus(200);
     }
@@ -227,7 +227,7 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
 
         $response = $this->actingAs($user, 'api')
-            ->json('DELETE', 'api/users/' . $user->id);
+            ->json('DELETE', 'api/v1/users/' . $user->id);
 
         $response->assertStatus(204);
     }
