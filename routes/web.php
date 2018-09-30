@@ -14,3 +14,5 @@
 Auth::routes(['verify' => true]);
 
 Route::get('/', 'HomeController@index')->middleware('verified')->name('home');
+
+Route::get('/doc', 'HomeController@showDoc')->name('api.doc');

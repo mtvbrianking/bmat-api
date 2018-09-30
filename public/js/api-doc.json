@@ -1,0 +1,233 @@
+{
+  "swagger": "2.0",
+  "schemes": [
+    "http"
+  ],
+  "host": "/bmat-api",
+  "basePath": "/v1",
+  "info": {
+    "description": "API usage documentation",
+    "version": "1.0.0",
+    "title": "BMAT API",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "url": "http://bmatovu.com/contact"
+    },
+    "x-logo": {
+      "url": "#"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "externalDocs": {
+    "description": "Source code documentation",
+    "url": "/bmat-api/docs"
+  },
+  "tags": [
+    {
+      "name": "user",
+      "description": "Operations about user"
+    }
+  ],
+  "x-tagGroups": [
+    {
+      "name": "Resources",
+      "tags": [
+        "user"
+      ]
+    }
+  ],
+  "securityDefinitions": {
+    "authorization code grant": {
+      "description": "Get access to data while protecting your account credentials.",
+      "type": "oauth2",
+      "flow": "accessCode",
+      "authorizationUrl": "http://localhost/bmat-api/oauth/authorize",
+      "tokenUrl": "http://localhost/bmat-api/oauth/token",
+      "scopes": {
+        
+      }
+    },
+    "client credentials grant": {
+      "description": "Get access to data while protecting your account credentials.",
+      "type": "oauth2",
+      "flow": "client",
+      "tokenUrl": "http://localhost/bmat-api/oauth/token",
+      "scopes": {
+        
+      }
+    },
+    "person_access_token": {
+      "description": "You can use a [personal access](http://localhost/bmat-api/oauth) token for testing.",
+    }
+  },
+  "x-servers": [
+    {
+      "url": "//localhost/bmat-api/api/v1",
+      "description": "Live server"
+    },
+    {
+      "url": "//localhost/bmat-api/api/v1/sandbox",
+      "description": "Sandbox server"
+    }
+  ],
+  "paths": {
+
+    "/users/auth": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Authenticate user",
+        "description": "",
+        "operationId": "authUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "Must be verified",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "In plain text",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "x-code-samples": [
+          {
+            "lang": "CURL",
+            "source": "curl -X POST \\\n http:\/\/localhost\/bmat-api\/api\/v1\/users\/auth \\\n -H 'Accept: application\/json' \\\n -H 'Authorization: Bearer <ACCESS TOKEN>' \\\n -H 'content-type: multipart\/form-data' \\\n -F 'email=jdoe@example.com' \\\n -F 'password=S&jPc-6%'"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "examples": {
+              "application/json": {
+                "message": "Unauthenticated."
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "examples": {
+              "application/json": {
+                "message": "Insufficient Permission."
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "examples": {
+              "application/json": {
+                "error": "Unknown user"
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessibile entity",
+            "examples": {
+              "application/json": {
+                "error": { 
+                  "password": [
+                    "Wrong password"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ErrorResponse": {
+      "error": "Error message..."
+    },
+    "401ErrorResponse": {
+      "message": "Unauthenticated."
+    },
+    "403ErrorResponse": {
+      "message": "Insufficient Permission."
+    },
+    "422ErrorResponse": {
+      "error": { 
+        "param-1": [
+          "Validation error message 1.1"
+        ],
+        "param-2": [
+          "Validation error message 2.1",
+          "Validation error message 2.2"
+        ]
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "User ID",
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "description": "User full name",
+          "type": "string",
+          "maxLength": 25,
+          "example": "John Doe"
+        },
+        "email": {
+          "description": "User email address",
+          "type": "string",
+          "format": "email",
+          "example": "jdoe@example.com"
+        },
+        "password": {
+          "type": "string",
+          "description": "User password, MUST contain a mix of upper and lower case letters, as well as digits",
+          "format": "password",
+          "minLength": 8,
+          "pattern": "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])",
+          "example": "S&jPc-6%"
+        },
+        "created_at": {
+          "description": "When user account was created",
+          "type": "datetime",
+          "example": "2018-09-30 15:32:06",
+          "x-nullable": true
+        },
+        "email_verified_at": {
+          "description": "When user account was verified",
+          "type": "datetime",
+          "example": "2018-09-30 15:35:42",
+          "x-nullable": true
+        },
+        "updated_at": {
+          "description": "When user account was last updated",
+          "type": "datetime",
+          "example": "2018-09-30 15:35:42",
+          "x-nullable": true
+        },
+        "deleted_at": {
+          "description": "When user account was deleted",
+          "type": "datetime",
+          "x-nullable": true
+        },
+      }
+    }
+  }
+}

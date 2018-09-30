@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['showDoc']);
     }
 
     /**
@@ -24,5 +24,15 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    /**
+     * Show API documentation
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showDoc()
+    {
+        return view('doc');
     }
 }
