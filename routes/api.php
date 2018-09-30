@@ -21,11 +21,13 @@ Route::pattern('user', '^\d+$');
 Route::group(['prefix' => 'users', 'name' => 'users.'], function () {
     Route::get('/', 'UserController@index')->name('index');
     Route::get('/{user}', 'UserController@show')->name('show');
+    Route::post('/auth', 'UserController@authenticate')->middleware('auth.client')->name('auth');
     Route::get('/create', 'UserController@create')->name('create');
     Route::post('/', 'UserController@store')->middleware('auth.client')->name('store');
     Route::get('/{user}/edit', 'UserController@edit')->name('edit');
     Route::put('/{user}', 'UserController@update')->name('update');
+    Route::put('/{user}/profile', 'UserController@update')->name('profile.update');
     Route::put('/{user}/trash', 'UserController@trash')->name('trash');
     Route::put('/{user}/restore', 'UserController@restore')->name('restore');
-    Route::delete('/{user}/destroy', 'UserController@destroy')->name('destroy');
+    Route::delete('/{user}', 'UserController@destroy')->name('destroy');
 });

@@ -14,7 +14,32 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api')->except(['store']);
+        $this->middleware('auth:api')->except(['store', 'auth']);
+    }
+
+    /**
+     * Authenticate user
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function authenticate(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $user = User::where('email', 'jdoe@example.com')->first();
+
+        if (!$user) {
+            return response()->json(['error' => 'Unknown user'], 404);
+        }
+
+        if (!password_verify($request->password, $user->password)) {
+            return response()->json(['error' => ['password' => 'Wrong password']], 422);
+        }
+
+        return response()->json($user);
     }
 
     /**
@@ -108,13 +133,47 @@ class UserController extends Controller
             'name' => 'sometimes|max:100|unique:users,name,' . $user->id,
             'email' => 'sometimes|email|max:255|unique:users,email,' . $user->id,
             'email_verified_at' => 'sometimes|date_format:Y-m-d H:i:s',
+        ]);
+
+        $user->name = $request->input('name', $user->name);
+        $user->email = $request->input('email', $user->email);
+        $user->email_verified_at = $request->input('email_verified_at', $user->email_verified_at);
+
+        $user->save();
+
+        return response()->json($user);
+    }
+
+    /**
+     * Update the specified user profile
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param int $id User ID
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateProfile(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        if (!$user)
+            return response()->json(['error' => 'Unknown user'], 404);
+
+        $this->validate($request, [
+            'name' => 'sometimes|max:100|unique:users,name,' . $user->id,
+            'email' => 'sometimes|email|max:255|unique:users,email,' . $user->id,
             'password' => $request->has('password') != null ? 'sometimes|required|min:6|confirmed' : '',
+            'current_password' => 'required_with:password',
         ]);
 
         $user->name = $request->input('name', $user->name);
         $user->email = $request->input('email', $user->email);
         $user->email_verified_at = $request->input('email_verified_at', $user->email_verified_at);
         if ($request->has('password')) {
+
+            if (!password_verify($request->current_password, $user->password)) {
+                return response()->json(['error' => ['current_password' => 'Wrong password']], 422);
+            }
+
             $user->password = Hash::make($request->password);
         }
 
@@ -124,7 +183,7 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified user.
+     * Remove user
      *
      * @param int $id User ID
      * @return \Illuminate\Http\JsonResponse
@@ -143,7 +202,7 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified user.
+     * Restore user
      *
      * @param int $id User ID
      * @return \Illuminate\Http\JsonResponse
@@ -161,7 +220,7 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Permanently remove user from storage.
      *
      * @param int $id User ID
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
