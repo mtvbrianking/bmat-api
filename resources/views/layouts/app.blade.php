@@ -85,7 +85,7 @@
 
         window.$.ajax({
             type: 'GET',
-            url: 'api/user',
+            url: 'api/v1/user',
             success: function (response) {
                 console.log(response);
             },

@@ -25,21 +25,17 @@ class UserController extends Controller
     public function authenticate(Request $request)
     {
         $this->validate($request, [
-            'email' => 'required|email',
+            'email' => '|required|email',
             'password' => 'required',
         ]);
 
-        $user = User::where('email', 'jdoe@example.com')->first();
+        $user = User::where('email', $request->email)->first();
 
-        if (!$user) {
-            return response()->json(['error' => 'Unknown user'], 404);
+        if ($user && password_verify($request->password, $user->password)) {
+            return response()->json($user);
         }
 
-        if (!password_verify($request->password, $user->password)) {
-            return response()->json(['error' => ['password' => 'Wrong password']], 422);
-        }
-
-        return response()->json($user);
+        return response()->json(['errors' => ['email' => 'Wrong username or password']], 422);
     }
 
     /**

@@ -19,7 +19,7 @@
         mounted() {
             console.log('Component mounted.');
 
-            axios.get('api/user').then(response => {
+            axios.get('api/v1/user').then(response => {
                 console.log(response.data);
             }).catch(error => {
                 console.log(error.response.data);

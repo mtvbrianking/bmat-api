@@ -47679,7 +47679,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         console.log('Component mounted.');
 
-        axios.get('api/user').then(function (response) {
+        axios.get('api/v1/user').then(function (response) {
             console.log(response.data);
         }).catch(function (error) {
             console.log(error.response.data);
