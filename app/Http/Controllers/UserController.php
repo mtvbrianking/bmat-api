@@ -25,7 +25,7 @@ class UserController extends Controller
     public function authenticate(Request $request)
     {
         $this->validate($request, [
-            'email' => '|required|email',
+            'email' => 'required|email',
             'password' => 'required',
         ]);
 
@@ -35,7 +35,7 @@ class UserController extends Controller
             return response()->json($user);
         }
 
-        return response()->json(['errors' => ['email' => 'Wrong username or password']], 422);
+        return response()->json(['errors' => ['email' => 'Wrong email or password.']], 422);
     }
 
     /**

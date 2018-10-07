@@ -18,7 +18,9 @@
 
 <redoc spec-url='{{ asset('js/api-doc.json') }}'></redoc>
 
-<script src="https://rebilly.github.io/ReDoc/releases/latest/redoc.min.js"></script>
+{{-- <script src="https://rebilly.github.io/ReDoc/releases/latest/redoc.min.js"></script> --}}
+
+<script src="{{ asset('js/redoc.min.js') }}"></script>
 
 </body>
 </html>

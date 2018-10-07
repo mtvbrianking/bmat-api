@@ -23,7 +23,7 @@
   },
   "externalDocs": {
     "description": "Source code documentation",
-    "url": "/bmat-api/docs"
+    "url": ":8000/docs"
   },
   "tags": [
     {
@@ -44,8 +44,8 @@
       "description": "Get access to data while protecting your account credentials.",
       "type": "oauth2",
       "flow": "accessCode",
-      "authorizationUrl": "http://localhost/bmat-api/oauth/authorize",
-      "tokenUrl": "http://localhost/bmat-api/oauth/token",
+      "authorizationUrl": "http://localhost:8000/oauth/authorize",
+      "tokenUrl": "http://localhost:8000/oauth/token",
       "scopes": {
         
       }
@@ -54,22 +54,22 @@
       "description": "Get access to data while protecting your account credentials.",
       "type": "oauth2",
       "flow": "client",
-      "tokenUrl": "http://localhost/bmat-api/oauth/token",
+      "tokenUrl": "http://localhost:8000/oauth/token",
       "scopes": {
         
       }
     },
     "person_access_token": {
-      "description": "You can use a [personal access](http://localhost/bmat-api/oauth) token for testing.",
+      "description": "You can use a [personal access](http://localhost:8000/oauth) token for testing.",
     }
   },
   "x-servers": [
     {
-      "url": "//localhost/bmat-api/api/v1",
+      "url": "//localhost:8000/api/v1",
       "description": "Live server"
     },
     {
-      "url": "//localhost/bmat-api/api/v1/sandbox",
+      "url": "//localhost:8000/api/v1/sandbox",
       "description": "Sandbox server"
     }
   ],
@@ -81,7 +81,7 @@
           "user"
         ],
         "summary": "Authenticate user",
-        "description": "",
+        "description": "Only avaiable for <code>client credentials grant</code> client apps",
         "operationId": "authUser",
         "produces": [
           "application/json"
@@ -90,22 +90,24 @@
           {
             "name": "email",
             "in": "formData",
-            "description": "Must be verified",
+            "description": "Verified user account email address",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "example": "jdoe@example.com"
           },
           {
             "name": "password",
             "in": "formData",
-            "description": "In plain text",
+            "description": "Plain text user account password",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "example": "S&jPc-6%"
           }
         ],
         "x-code-samples": [
           {
             "lang": "CURL",
-            "source": "curl -X POST \\\n http:\/\/localhost\/bmat-api\/api\/v1\/users\/auth \\\n -H 'Accept: application\/json' \\\n -H 'Authorization: Bearer <ACCESS TOKEN>' \\\n -H 'content-type: multipart\/form-data' \\\n -F 'email=jdoe@example.com' \\\n -F 'password=S&jPc-6%'"
+            "source": "curl -X POST \\\n http:\/\/localhost:8000\/api\/v1\/users\/auth \\\n -H 'Accept: application\/json' \\\n -H 'Authorization: Bearer <ACCESS TOKEN>' \\\n -H 'content-type: multipart\/form-data' \\\n -F 'email=jdoe@example.com' \\\n -F 'password=S&jPc-6%'"
           }
         ],
         "responses": {
@@ -117,10 +119,8 @@
           },
           "401": {
             "description": "Unauthorized",
-            "examples": {
-              "application/json": {
-                "message": "Unauthenticated."
-              }
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
             }
           },
           "403": {
@@ -131,21 +131,13 @@
               }
             }
           },
-          "404": {
-            "description": "Not Found",
-            "examples": {
-              "application/json": {
-                "error": "Unknown user"
-              }
-            }
-          },
           "422": {
             "description": "Unprocessibile entity",
             "examples": {
               "application/json": {
-                "error": { 
-                  "password": [
-                    "Wrong password"
+                "errors": { 
+                  "email": [
+                    "Wrong email or password."
                   ]
                 }
               }
@@ -157,7 +149,14 @@
   },
   "definitions": {
     "ErrorResponse": {
-      "error": "Error message..."
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "Error message",
+          "type": "string",
+          "example": "Something went wrong."
+        }
+      } 
     },
     "401ErrorResponse": {
       "message": "Unauthenticated."
@@ -166,13 +165,9 @@
       "message": "Insufficient Permission."
     },
     "422ErrorResponse": {
-      "error": { 
-        "param-1": [
-          "Validation error message 1.1"
-        ],
-        "param-2": [
-          "Validation error message 2.1",
-          "Validation error message 2.2"
+      "errors": { 
+        "email": [
+          "Wrong email or password."
         ]
       }
     },
@@ -181,8 +176,8 @@
       "properties": {
         "id": {
           "description": "User ID",
-          "type": "integer",
-          "format": "int64"
+          "type": "uuid",
+          "example": "0ac99f1b-482c-4af1-be28-ddace07eff20"
         },
         "name": {
           "description": "User full name",
@@ -195,14 +190,6 @@
           "type": "string",
           "format": "email",
           "example": "jdoe@example.com"
-        },
-        "password": {
-          "type": "string",
-          "description": "User password, MUST contain a mix of upper and lower case letters, as well as digits",
-          "format": "password",
-          "minLength": 8,
-          "pattern": "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])",
-          "example": "S&jPc-6%"
         },
         "created_at": {
           "description": "When user account was created",
