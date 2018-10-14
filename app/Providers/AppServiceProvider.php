@@ -26,15 +26,6 @@ class AppServiceProvider extends ServiceProvider
         Client::retrieved(function (Client $client) {
             $client->incrementing = false;
         });
-
-        PersonalAccessClient::creating(function (PersonalAccessClient $client) {
-            $client->incrementing = false;
-            $client->id = \Ramsey\Uuid\Uuid::uuid4()->toString();
-        });
-
-        PersonalAccessClient::retrieved(function (PersonalAccessClient $client) {
-            $client->incrementing = false;
-        });
     }
 
     /**

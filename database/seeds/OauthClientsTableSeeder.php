@@ -54,7 +54,7 @@ class OauthClientsTableSeeder extends Seeder
         $personal_client->revoked = false;
         $personal_client->save();
 
-        $client = new \Laravel\Passport\PersonalAccessClient();
+        $client = new PersonalAccessClient();
         $client->client_id = $personal_client->id;
         $client->save();
 
