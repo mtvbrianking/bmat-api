@@ -25,6 +25,7 @@
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="APP_URL" value="http://localhost"/>
+        <env name="APP_KEY" value="base64:NJWzkcD0taLlJA1OZXKSXAml0MTQAPff9C2NL226X84=" />
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
