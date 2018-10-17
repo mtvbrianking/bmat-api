@@ -1,220 +1,219 @@
 {
-  "swagger": "2.0",
-  "schemes": [
-    "http"
-  ],
-  "host": "/bmat-api",
-  "basePath": "/v1",
-  "info": {
-    "description": "API usage documentation",
-    "version": "1.0.0",
-    "title": "BMAT API",
-    "termsOfService": "http://swagger.io/terms/",
-    "contact": {
-      "url": "http://bmatovu.com/contact"
+    "swagger": "2.0",
+    "schemes": [
+        "http"
+    ],
+    "host": "/bmat-api",
+    "basePath": "/v1",
+    "info": {
+        "description": "API usage documentation",
+        "version": "1.0.0",
+        "title": "BMAT API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "url": "http://bmatovu.com/contact"
+        },
+        "x-logo": {
+            "url": "#"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
     },
-    "x-logo": {
-      "url": "#"
+    "externalDocs": {
+        "description": "Source code documentation",
+        "url": "http//localhost:8000/doc"
     },
-    "license": {
-      "name": "MIT",
-      "url": "https://opensource.org/licenses/MIT"
-    }
-  },
-  "externalDocs": {
-    "description": "Source code documentation",
-    "url": ":8000/docs"
-  },
-  "tags": [
-    {
-      "name": "user",
-      "description": "Operations about user"
-    }
-  ],
-  "x-tagGroups": [
-    {
-      "name": "Resources",
-      "tags": [
-        "user"
-      ]
-    }
-  ],
-  "securityDefinitions": {
-    "authorization code grant": {
-      "description": "Get access to data while protecting your account credentials.",
-      "type": "oauth2",
-      "flow": "accessCode",
-      "authorizationUrl": "http://localhost:8000/oauth/authorize",
-      "tokenUrl": "http://localhost:8000/oauth/token",
-      "scopes": {
-        
-      }
-    },
-    "client credentials grant": {
-      "description": "Get access to data while protecting your account credentials.",
-      "type": "oauth2",
-      "flow": "client",
-      "tokenUrl": "http://localhost:8000/oauth/token",
-      "scopes": {
-        
-      }
-    },
-    "person_access_token": {
-      "description": "You can use a [personal access](http://localhost:8000/oauth) token for testing.",
-    }
-  },
-  "x-servers": [
-    {
-      "url": "//localhost:8000/api/v1",
-      "description": "Live server"
-    },
-    {
-      "url": "//localhost:8000/api/v1/sandbox",
-      "description": "Sandbox server"
-    }
-  ],
-  "paths": {
-
-    "/users/auth": {
-      "post": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Authenticate user",
-        "description": "Only avaiable for <code>client credentials grant</code> client apps",
-        "operationId": "authUser",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "email",
-            "in": "formData",
-            "description": "Verified user account email address",
-            "required": true,
-            "type": "string",
-            "example": "jdoe@example.com"
-          },
-          {
-            "name": "password",
-            "in": "formData",
-            "description": "Plain text user account password",
-            "required": true,
-            "type": "string",
-            "example": "S&jPc-6%"
-          }
-        ],
-        "x-code-samples": [
-          {
-            "lang": "CURL",
-            "source": "curl -X POST \\\n http:\/\/localhost:8000\/api\/v1\/users\/auth \\\n -H 'Accept: application\/json' \\\n -H 'Authorization: Bearer <ACCESS TOKEN>' \\\n -H 'content-type: multipart\/form-data' \\\n -F 'email=jdoe@example.com' \\\n -F 'password=S&jPc-6%'"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/User"
+    "tags": [
+        {
+            "name": "user",
+            "description": "Operations about user"
+        }
+    ],
+    "x-tagGroups": [
+        {
+            "name": "Resources",
+            "tags": [
+                "user"
+            ]
+        }
+    ],
+    "securityDefinitions": {
+        "authorization code grant": {
+            "description": "Get access to data while protecting your account credentials.",
+            "type": "oauth2",
+            "flow": "accessCode",
+            "authorizationUrl": "http://localhost:8000/oauth/authorize",
+            "tokenUrl": "http://localhost:8000/oauth/token",
+            "scopes": {
             }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+        },
+        "client credentials grant": {
+            "description": "Get access to data while protecting your account credentials.",
+            "type": "oauth2",
+            "flow": "client",
+            "tokenUrl": "http://localhost:8000/oauth/token",
+            "scopes": {
             }
-          },
-          "403": {
-            "description": "Forbidden",
-            "examples": {
-              "application/json": {
-                "message": "Insufficient Permission."
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessibile entity",
-            "examples": {
-              "application/json": {
-                "errors": { 
-                  "email": [
-                    "Wrong email or password."
-                  ]
+        },
+        "person_access_token": {
+            "description": "You can use a [personal access](http://localhost:8000/oauth) token for testing."
+        }
+    },
+    "x-servers": [
+        {
+            "url": "//localhost:8000/api/v1",
+            "description": "Live server"
+        },
+        {
+            "url": "//localhost:8000/api/v1/sandbox",
+            "description": "Sandbox server"
+        }
+    ],
+    "paths": {
+        "/users/auth": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Authenticate user",
+                "description": "Only available for <code>client credentials grant</code> client apps",
+                "operationId": "authUser",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "Verified user account email address",
+                        "required": true,
+                        "type": "string",
+                        "example": "jdoe@example.com"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "Plain text user account password",
+                        "required": true,
+                        "type": "string",
+                        "example": "S&jPc-6%"
+                    }
+                ],
+                "x-code-samples": [
+                    {
+                        "lang": "CURL",
+                        "source": "curl -X POST \\\n http:\/\/localhost:8000\/api\/v1\/users\/auth \\\n -H 'Accept: application\/json' \\\n -H 'Authorization: Bearer <ACCESS TOKEN>' \\\n -H 'content-type: multipart\/form-data' \\\n -F 'email=jdoe@example.com' \\\n -F 'password=S&jPc-6%'"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "examples": {
+                            "application/json": {
+                                "message": "Unauthenticated."
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "examples": {
+                            "application/json": {
+                                "message": "Insufficient Permission."
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessibile entity",
+                        "examples": {
+                            "application/json": {
+                                "errors": {
+                                    "email": [
+                                        "Wrong email or password."
+                                    ]
+                                }
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
         }
-      }
-    }
-  },
-  "definitions": {
-    "ErrorResponse": {
-      "type": "object",
-      "properties": {
-        "error": {
-          "description": "Error message",
-          "type": "string",
-          "example": "Something went wrong."
+    },
+    "definitions": {
+        "ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "description": "Error message",
+                    "type": "string",
+                    "example": "Something went wrong."
+                }
+            }
+        },
+        "401ErrorResponse": {
+            "message": "Unauthenticated."
+        },
+        "403ErrorResponse": {
+            "message": "Insufficient Permission."
+        },
+        "422ErrorResponse": {
+            "errors": {
+                "email": [
+                    "Wrong email or password."
+                ]
+            }
+        },
+        "User": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "User ID",
+                    "type": "uuid",
+                    "example": "0ac99f1b-482c-4af1-be28-ddace07eff20"
+                },
+                "name": {
+                    "description": "User full name",
+                    "type": "string",
+                    "maxLength": 25,
+                    "example": "John Doe"
+                },
+                "email": {
+                    "description": "User email address",
+                    "type": "string",
+                    "format": "email",
+                    "example": "jdoe@example.com"
+                },
+                "created_at": {
+                    "description": "When user account was created",
+                    "type": "datetime",
+                    "example": "2018-09-30 15:32:06",
+                    "x-nullable": true
+                },
+                "email_verified_at": {
+                    "description": "When user account was verified",
+                    "type": "datetime",
+                    "example": "2018-09-30 15:35:42",
+                    "x-nullable": true
+                },
+                "updated_at": {
+                    "description": "When user account was last updated",
+                    "type": "datetime",
+                    "example": "2018-09-30 15:35:42",
+                    "x-nullable": true
+                },
+                "deleted_at": {
+                    "description": "When user account was deleted",
+                    "type": "datetime",
+                    "x-nullable": true
+                }
+            }
         }
-      } 
-    },
-    "401ErrorResponse": {
-      "message": "Unauthenticated."
-    },
-    "403ErrorResponse": {
-      "message": "Insufficient Permission."
-    },
-    "422ErrorResponse": {
-      "errors": { 
-        "email": [
-          "Wrong email or password."
-        ]
-      }
-    },
-    "User": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "description": "User ID",
-          "type": "uuid",
-          "example": "0ac99f1b-482c-4af1-be28-ddace07eff20"
-        },
-        "name": {
-          "description": "User full name",
-          "type": "string",
-          "maxLength": 25,
-          "example": "John Doe"
-        },
-        "email": {
-          "description": "User email address",
-          "type": "string",
-          "format": "email",
-          "example": "jdoe@example.com"
-        },
-        "created_at": {
-          "description": "When user account was created",
-          "type": "datetime",
-          "example": "2018-09-30 15:32:06",
-          "x-nullable": true
-        },
-        "email_verified_at": {
-          "description": "When user account was verified",
-          "type": "datetime",
-          "example": "2018-09-30 15:35:42",
-          "x-nullable": true
-        },
-        "updated_at": {
-          "description": "When user account was last updated",
-          "type": "datetime",
-          "example": "2018-09-30 15:35:42",
-          "x-nullable": true
-        },
-        "deleted_at": {
-          "description": "When user account was deleted",
-          "type": "datetime",
-          "x-nullable": true
-        },
-      }
     }
-  }
 }

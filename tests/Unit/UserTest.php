@@ -1,55 +1,54 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Passport\Passport;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
 {
-
     use RefreshDatabase;
 
     /**
      * Get users.
+     *
      * @test
-     * @group current
+     * @group passing
      */
     public function getUsers()
     {
         $user = factory(User::class)->create();
 
-        $response = $this
-            ->actingAs($user, 'api')
-            ->withHeaders([
+        $response = $this->actingAs($user, 'api')->withHeaders([
                 'Accept' => 'application/json',
-            ])
-            ->json('GET', 'api/v1/users', []);
+            ])->json('GET', 'api/v1/users', []);
 
         $response->assertStatus(200);
     }
 
     /**
      * Visit create user.
+     *
      * @test
-     * @group current
+     * @group passing
      */
     public function visitCreateUser()
     {
         $user = factory(User::class)->create();
 
-        $response = $this->actingAs($user, 'api')
-            ->json('GET', 'api/v1/users/create');
+        $response = $this->actingAs($user, 'api')->json('GET', 'api/v1/users/create');
 
         $response->assertStatus(501);
     }
 
     /**
      * Register user.
+     *
      * @test
-     * @group current
+     * @group passing
      */
     public function createUser()
     {
@@ -57,8 +56,7 @@ class UserTest extends TestCase
 
         $user = factory(User::class)->create();
 
-        $response = $this->actingAs($user, 'api')
-            ->json('POST', 'api/v1/users', [
+        $response = $this->actingAs($user, 'api')->json('POST', 'api/v1/users', [
                 'name' => 'John Doe',
                 'email' => 'jdoe@example.com',
                 'password' => '!B>z5RJ%dUE$F52_',
@@ -69,28 +67,29 @@ class UserTest extends TestCase
     }
 
     /**
-     * User details
+     * User details.
+     *
      * @test
-     * @group current
+     * @group passing
      */
     public function getUser()
     {
         $user = factory(User::class)->create();
 
-        $response = $this->actingAs($user, 'api')
-            ->json('GET', 'api/v1/users/' . $user->id);
+        $response = $this->actingAs($user, 'api')->json('GET', 'api/v1/users/'.$user->id);
 
         $response->assertStatus(200);
     }
 
     /**
-     * Authenticate user
+     * Authenticate user.
+     *
      * @test
-     * @group current
+     * @group passing
      */
     public function authenticateUser()
     {
-         // $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
 
         // Laravel Passport Issues: #680, #514
         $this->withoutMiddleware(\Laravel\Passport\Http\Middleware\CheckClientCredentials::class);
@@ -100,8 +99,7 @@ class UserTest extends TestCase
             'password' => Hash::make('gJrFhC2B-!Y!4CTk'),
         ]);
 
-        $response = $this->actingAs($user, 'api')
-            ->json('POST', 'api/v1/users/auth', [
+        $response = $this->actingAs($user, 'api')->json('POST', 'api/v1/users/auth', [
                 'email' => 'jdoe@example.com',
                 'password' => 'gJrFhC2B-!Y!4CTk',
             ]);
@@ -111,30 +109,30 @@ class UserTest extends TestCase
 
     /**
      * Visit edit user.
+     *
      * @test
-     * @group current
+     * @group passing
      */
     public function visitEditUser()
     {
         $user = factory(User::class)->create();
 
-        $response = $this->actingAs($user, 'api')
-            ->json('GET', 'api/v1/users/' . $user->id . '/edit');
+        $response = $this->actingAs($user, 'api')->json('GET', 'api/v1/users/'.$user->id.'/edit');
 
         $response->assertStatus(501);
     }
 
     /**
-     * Update user details
+     * Update user details.
+     *
      * @test
-     * @group current
+     * @group passing
      */
     public function updateUser()
     {
         $user = factory(User::class)->create();
 
-        $response = $this->actingAs($user, 'api')
-            ->json('PUT', 'api/v1/users/' . $user->id, [
+        $response = $this->actingAs($user, 'api')->json('PUT', 'api/v1/users/'.$user->id, [
                 'name' => 'John Doe',
                 'email' => 'jdoe@example.com',
                 'email_verified_at' => date('Y-m-d H:i:s'),
@@ -146,9 +144,10 @@ class UserTest extends TestCase
     }
 
     /**
-     * Update user profile
+     * Update user profile.
+     *
      * @test
-     * @group current
+     * @group passing
      */
     public function updateUserProfile()
     {
@@ -156,8 +155,7 @@ class UserTest extends TestCase
             'password' => 'gJrFhC2B-!Y!4CTk',
         ]);
 
-        $response = $this->actingAs($user, 'api')
-            ->json('PUT', 'api/v1/users/' . $user->id . '/profile', [
+        $response = $this->actingAs($user, 'api')->json('PUT', 'api/v1/users/'.$user->id.'/profile', [
                 'name' => 'John Doe',
                 'email' => 'jdoe@example.com',
                 'current_password' => 'gJrFhC2B-!Y!4CTk',
@@ -169,40 +167,40 @@ class UserTest extends TestCase
     }
 
     /**
-     * Delete user
-     * Temporarily
+     * Delete user - temporarily.
+     *
      * @test
-     * @group current
+     * @group passing
      */
     public function removeUser()
     {
         $user = factory(User::class)->create();
 
-        $response = $this->actingAs($user, 'api')
-            ->json('PUT', 'api/v1/users/' . $user->id . '/trash');
+        $response = $this->actingAs($user, 'api')->json('PUT', 'api/v1/users/'.$user->id.'/trash');
 
         $response->assertStatus(200);
     }
 
     /**
-     * Restore user
+     * Restore user.
+     *
      * @test
-     * @group current
+     * @group passing
      */
     public function restoreUser()
     {
         $user = factory(User::class)->create();
 
-        $response = $this->actingAs($user, 'api')
-            ->json('PUT', 'api/v1/users/' . $user->id . '/restore');
+        $response = $this->actingAs($user, 'api')->json('PUT', 'api/v1/users/'.$user->id.'/restore');
 
         $response->assertStatus(404);
     }
 
     /**
-     * Restore trashed user
+     * Restore trashed user.
+     *
      * @test
-     * @group current
+     * @group passing
      */
     public function restoreTrashedUser()
     {
@@ -210,26 +208,23 @@ class UserTest extends TestCase
 
         $user->delete();
 
-        $response = $this->actingAs($user, 'api')
-            ->json('PUT', 'api/v1/users/' . $user->id . '/restore');
+        $response = $this->actingAs($user, 'api')->json('PUT', 'api/v1/users/'.$user->id.'/restore');
 
         $response->assertStatus(200);
     }
 
     /**
-     * Delete user
-     * Permanently
+     * Delete user - permanently.
+     *
      * @test
-     * @group current
+     * @group passing
      */
     public function deleteUser()
     {
         $user = factory(User::class)->create();
 
-        $response = $this->actingAs($user, 'api')
-            ->json('DELETE', 'api/v1/users/' . $user->id);
+        $response = $this->actingAs($user, 'api')->json('DELETE', 'api/v1/users/'.$user->id);
 
         $response->assertStatus(204);
     }
-
 }

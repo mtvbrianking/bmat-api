@@ -49456,6 +49456,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
                 _this3.showAccessToken(response.data.accessToken);
             }).catch(function (error) {
+                console.log(error);
+
                 if (_typeof(error.response.data) === 'object') {
                     _this3.form.errors = _.flatten(_.toArray(error.response.data.errors));
                 } else {
@@ -49579,9 +49581,9 @@ var render = function() {
                         { staticStyle: { "vertical-align": "middle" } },
                         [
                           _vm._v(
-                            "\n                                " +
+                            "\n                            " +
                               _vm._s(token.name) +
-                              "\n                            "
+                              "\n                        "
                           )
                         ]
                       ),
@@ -49602,7 +49604,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                                    Delete\n                                "
+                                "\n                                Delete\n                            "
                               )
                             ]
                           )
@@ -49723,7 +49725,7 @@ var render = function() {
                                     }
                                   }),
                                   _vm._v(
-                                    "\n\n                                                " +
+                                    "\n\n                                            " +
                                       _vm._s(scope.id) +
                                       "\n                                        "
                                   )
