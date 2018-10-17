@@ -3,9 +3,9 @@
 namespace Tests\Unit;
 
 use App\User;
-use Illuminate\Support\Facades\Hash;
-use Laravel\Passport\Passport;
 use Tests\TestCase;
+use Laravel\Passport\Passport;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase

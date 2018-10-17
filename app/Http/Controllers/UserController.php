@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-
     /**
      * Create a new controller instance.
      */
@@ -18,7 +17,7 @@ class UserController extends Controller
     }
 
     /**
-     * Authenticate user
+     * Authenticate user.
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -46,6 +45,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::withTrashed()->get();
+
         return response()->json(['users' => $users]);
     }
 
@@ -94,8 +94,9 @@ class UserController extends Controller
     {
         $user = User::withTrashed()->find($id);
 
-        if (!$user)
+        if (! $user) {
             return response()->json(['error' => 'Unknown user'], 404);
+        }
 
         return response()->json($user);
     }
@@ -122,12 +123,13 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        if (!$user)
+        if (! $user) {
             return response()->json(['error' => 'Unknown user'], 404);
+        }
 
         $this->validate($request, [
-            'name' => 'sometimes|max:100|unique:users,name,' . $user->id,
-            'email' => 'sometimes|email|max:255|unique:users,email,' . $user->id,
+            'name' => 'sometimes|max:100|unique:users,name,'.$user->id,
+            'email' => 'sometimes|email|max:255|unique:users,email,'.$user->id,
             'email_verified_at' => 'sometimes|date_format:Y-m-d H:i:s',
         ]);
 
@@ -141,7 +143,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified user profile
+     * Update the specified user profile.
      *
      * @param  \Illuminate\Http\Request $request
      * @param int $id User ID
@@ -151,12 +153,13 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        if (!$user)
+        if (! $user) {
             return response()->json(['error' => 'Unknown user'], 404);
+        }
 
         $this->validate($request, [
-            'name' => 'sometimes|max:100|unique:users,name,' . $user->id,
-            'email' => 'sometimes|email|max:255|unique:users,email,' . $user->id,
+            'name' => 'sometimes|max:100|unique:users,name,'.$user->id,
+            'email' => 'sometimes|email|max:255|unique:users,email,'.$user->id,
             'password' => $request->has('password') != null ? 'sometimes|required|min:6|confirmed' : '',
             'current_password' => 'required_with:password',
         ]);
@@ -165,8 +168,7 @@ class UserController extends Controller
         $user->email = $request->input('email', $user->email);
         $user->email_verified_at = $request->input('email_verified_at', $user->email_verified_at);
         if ($request->has('password')) {
-
-            if (!password_verify($request->current_password, $user->password)) {
+            if (! password_verify($request->current_password, $user->password)) {
                 return response()->json(['error' => ['current_password' => 'Wrong password']], 422);
             }
 
@@ -179,7 +181,7 @@ class UserController extends Controller
     }
 
     /**
-     * Remove user
+     * Remove user.
      *
      * @param int $id User ID
      * @return \Illuminate\Http\JsonResponse
@@ -189,8 +191,9 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        if (!$user)
+        if (! $user) {
             return response()->json(['error' => 'Unknown user'], 404);
+        }
 
         $user->delete();
 
@@ -198,7 +201,7 @@ class UserController extends Controller
     }
 
     /**
-     * Restore user
+     * Restore user.
      *
      * @param int $id User ID
      * @return \Illuminate\Http\JsonResponse
@@ -207,8 +210,9 @@ class UserController extends Controller
     {
         $user = User::onlyTrashed()->find($id);
 
-        if (!$user)
+        if (! $user) {
             return response()->json(['error' => 'Unknown user'], 404);
+        }
 
         $user->restore();
 
@@ -225,8 +229,9 @@ class UserController extends Controller
     {
         $user = User::withTrashed()->find($id);
 
-        if (!$user)
+        if (! $user) {
             return response()->json(['error' => 'Unknown user'], 404);
+        }
 
         $user->forceDelete();
 
