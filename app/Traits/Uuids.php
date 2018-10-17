@@ -3,12 +3,11 @@
 namespace App\Traits;
 
 /**
- * Trait Uuids
+ * Trait Uuids.
  * @link https://medium.com/@steveazz/setting-up-uuids-in-laravel-5-552412db2088
  */
 trait Uuids
 {
-
     /**
      * Boot function from laravel.
      */

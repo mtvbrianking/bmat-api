@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class HomeController extends Controller
 {
     /**
@@ -27,7 +25,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Show API documentation
+     * Show API documentation.
      *
      * @return \Illuminate\Http\Response
      */
