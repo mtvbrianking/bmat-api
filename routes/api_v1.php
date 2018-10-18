@@ -26,7 +26,7 @@ Route::group(['prefix' => 'users', 'name' => 'users.'], function () {
     Route::post('/', 'UserController@store')->middleware('auth.client')->name('store');
     Route::get('/{user}/edit', 'UserController@edit')->name('edit');
     Route::put('/{user}', 'UserController@update')->name('update');
-    Route::put('/{user}/profile', 'UserController@update')->name('profile.update');
+    Route::put('/{user}/profile', 'UserController@updateProfile')->name('profile.update');
     Route::put('/{user}/trash', 'UserController@trash')->name('trash');
     Route::put('/{user}/restore', 'UserController@restore')->name('restore');
     Route::delete('/{user}', 'UserController@destroy')->name('destroy');

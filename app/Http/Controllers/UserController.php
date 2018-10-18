@@ -18,8 +18,10 @@ class UserController extends Controller
 
     /**
      * Authenticate user.
+     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function authenticate(Request $request)
     {
@@ -64,6 +66,7 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
@@ -87,7 +90,7 @@ class UserController extends Controller
     /**
      * Display the specified user.
      *
-     * @param int $id User ID
+     * @param string $id User ID
      * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
@@ -104,7 +107,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified user.
      *
-     * @param int $id User ID
+     * @param string $id User ID
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -116,8 +119,9 @@ class UserController extends Controller
      * Update the specified user.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param int $id User ID
+     * @param string $id User ID
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, $id)
     {
@@ -146,8 +150,9 @@ class UserController extends Controller
      * Update the specified user profile.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param int $id User ID
+     * @param string $id User ID
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function updateProfile(Request $request, $id)
     {
@@ -169,7 +174,7 @@ class UserController extends Controller
         $user->email_verified_at = $request->input('email_verified_at', $user->email_verified_at);
         if ($request->has('password')) {
             if (! password_verify($request->current_password, $user->password)) {
-                return response()->json(['error' => ['current_password' => 'Wrong password']], 422);
+                return response()->json(['errors' => ['current_password' => ['Wrong password']]], 422);
             }
 
             $user->password = Hash::make($request->password);
@@ -183,7 +188,7 @@ class UserController extends Controller
     /**
      * Remove user.
      *
-     * @param int $id User ID
+     * @param string $id User ID
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception If no primary key defined on model.
      */
@@ -203,7 +208,7 @@ class UserController extends Controller
     /**
      * Restore user.
      *
-     * @param int $id User ID
+     * @param string $id User ID
      * @return \Illuminate\Http\JsonResponse
      */
     public function restore($id)
@@ -222,7 +227,7 @@ class UserController extends Controller
     /**
      * Permanently remove user from storage.
      *
-     * @param int $id User ID
+     * @param string $id User ID
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      */
     public function destroy($id)
