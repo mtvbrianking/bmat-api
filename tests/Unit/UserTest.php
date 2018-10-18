@@ -4,7 +4,6 @@ namespace Tests\Unit;
 
 use App\User;
 use Tests\TestCase;
-use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -23,8 +22,8 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
 
         $response = $this->actingAs($user, 'api')->withHeaders([
-                'Accept' => 'application/json',
-            ])->json('GET', 'api/v1/users', []);
+            'Accept' => 'application/json',
+        ])->json('GET', 'api/v1/users', []);
 
         $response->assertStatus(200);
     }
@@ -57,11 +56,11 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
 
         $response = $this->actingAs($user, 'api')->json('POST', 'api/v1/users', [
-                'name' => 'John Doe',
-                'email' => 'jdoe@example.com',
-                'password' => '!B>z5RJ%dUE$F52_',
-                'password_confirmation' => '!B>z5RJ%dUE$F52_',
-            ]);
+            'name' => 'John Doe',
+            'email' => 'jdoe@example.com',
+            'password' => '!B>z5RJ%dUE$F52_',
+            'password_confirmation' => '!B>z5RJ%dUE$F52_',
+        ]);
 
         $response->assertStatus(201);
     }
@@ -100,9 +99,9 @@ class UserTest extends TestCase
         ]);
 
         $response = $this->actingAs($user, 'api')->json('POST', 'api/v1/users/auth', [
-                'email' => 'jdoe@example.com',
-                'password' => 'gJrFhC2B-!Y!4CTk',
-            ]);
+            'email' => 'jdoe@example.com',
+            'password' => 'gJrFhC2B-!Y!4CTk',
+        ]);
 
         $response->assertStatus(200);
     }
@@ -133,12 +132,12 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
 
         $response = $this->actingAs($user, 'api')->json('PUT', 'api/v1/users/'.$user->id, [
-                'name' => 'John Doe',
-                'email' => 'jdoe@example.com',
-                'email_verified_at' => date('Y-m-d H:i:s'),
-                'password' => '!B>z5RJ%dUE$F52_',
-                'password_confirmation' => '!B>z5RJ%dUE$F52_',
-            ]);
+            'name' => 'John Doe',
+            'email' => 'jdoe@example.com',
+            'email_verified_at' => date('Y-m-d H:i:s'),
+            'password' => '!B>z5RJ%dUE$F52_',
+            'password_confirmation' => '!B>z5RJ%dUE$F52_',
+        ]);
 
         $response->assertStatus(200);
     }
@@ -152,16 +151,16 @@ class UserTest extends TestCase
     public function updateUserProfile()
     {
         $user = factory(User::class)->create([
-            'password' => 'gJrFhC2B-!Y!4CTk',
+            'password' => Hash::make('gJrFhC2B-!Y!4CTk'),
         ]);
 
         $response = $this->actingAs($user, 'api')->json('PUT', 'api/v1/users/'.$user->id.'/profile', [
-                'name' => 'John Doe',
-                'email' => 'jdoe@example.com',
-                'current_password' => 'gJrFhC2B-!Y!4CTk',
-                'password' => '!B>z5RJ%dUE$F52_',
-                'password_confirmation' => '!B>z5RJ%dUE$F52_',
-            ]);
+            'name' => 'John Doe',
+            'email' => 'jdoe@example.com',
+            'current_password' => 'gJrFhC2B-!Y!4CTk',
+            'password' => '!B>z5RJ%dUE$F52_',
+            'password_confirmation' => '!B>z5RJ%dUE$F52_',
+        ]);
 
         $response->assertStatus(200);
     }
