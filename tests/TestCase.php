@@ -3,6 +3,7 @@
 namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Laravel\Passport\Passport;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -17,6 +18,16 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
+        // Load test keys
+        Passport::loadKeysFrom(__DIR__.'/storage');
+    }
+
+    /**
+     * Create client app
+     * @return void
+     */
+    private function createClient()
+    {
         $this->client = new \Laravel\Passport\Client();
         $this->client->user_id = null;
         $this->client->name = 'dev-client-grant-client';
@@ -29,11 +40,14 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Get client app access token.
+     * Request client app access token.
+     *
      * @return string access token
      */
     protected function getClientToken()
     {
+        $this->createClient();
+
         $response = $this->withHeaders([
             'Accept' => 'application/json',
             // 'Authorization' => 'Basic '.base64_encode($client->id.':'.$client->secret),

@@ -51,8 +51,6 @@ class UserTest extends TestCase
      */
     public function createUser()
     {
-        // $this->withoutMiddleware(\Laravel\Passport\Http\Middleware\CheckClientCredentials::class);
-
         $user = factory(User::class)->create();
 
         $response = $this->withHeaders([
@@ -91,11 +89,6 @@ class UserTest extends TestCase
      */
     public function authenticateUser()
     {
-        // $this->withoutExceptionHandling();
-
-        // Laravel Passport Issues: #680, #514
-        // $this->withoutMiddleware(\Laravel\Passport\Http\Middleware\CheckClientCredentials::class);
-
         $user = factory(User::class)->create([
             'email' => 'jdoe@example.com',
             'password' => Hash::make('gJrFhC2B-!Y!4CTk'),
