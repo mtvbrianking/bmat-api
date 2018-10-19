@@ -51,11 +51,14 @@ class UserTest extends TestCase
      */
     public function createUser()
     {
-        $this->withoutMiddleware(\Laravel\Passport\Http\Middleware\CheckClientCredentials::class);
+        // $this->withoutMiddleware(\Laravel\Passport\Http\Middleware\CheckClientCredentials::class);
 
         $user = factory(User::class)->create();
 
-        $response = $this->actingAs($user, 'api')->json('POST', 'api/v1/users', [
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '.$this->getClientToken(),
+        ])->actingAs($user, 'api')->json('POST', 'api/v1/users', [
             'name' => 'John Doe',
             'email' => 'jdoe@example.com',
             'password' => '!B>z5RJ%dUE$F52_',
@@ -91,14 +94,17 @@ class UserTest extends TestCase
         // $this->withoutExceptionHandling();
 
         // Laravel Passport Issues: #680, #514
-        $this->withoutMiddleware(\Laravel\Passport\Http\Middleware\CheckClientCredentials::class);
+        // $this->withoutMiddleware(\Laravel\Passport\Http\Middleware\CheckClientCredentials::class);
 
         $user = factory(User::class)->create([
             'email' => 'jdoe@example.com',
             'password' => Hash::make('gJrFhC2B-!Y!4CTk'),
         ]);
 
-        $response = $this->actingAs($user, 'api')->json('POST', 'api/v1/users/auth', [
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '.$this->getClientToken(),
+        ])->actingAs($user, 'api')->json('POST', 'api/v1/users/auth', [
             'email' => 'jdoe@example.com',
             'password' => 'gJrFhC2B-!Y!4CTk',
         ]);
