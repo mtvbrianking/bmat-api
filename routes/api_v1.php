@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::pattern('user', '^([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}){1}$');
-Route::group(['prefix' => 'users', 'name' => 'users.'], function () {
+Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
     Route::get('/', 'UserController@index')->name('index');
     Route::get('/{user}', 'UserController@show')->name('show');
     Route::post('/auth', 'UserController@authenticate')->middleware('auth.client')->name('auth');

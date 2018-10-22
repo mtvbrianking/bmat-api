@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -28,11 +29,37 @@ class UserController extends Controller
         $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required',
+            'scope' => 'sometimes|string',
         ]);
 
         $user = User::where('email', $request->email)->first();
 
         if ($user && password_verify($request->password, $user->password)) {
+
+            $client = get_auth_client($request);
+
+            // If isn't a password client; don't issue access token...
+            if (! $client->password_client) {
+                $user['token'] = null;
+
+                return response()->json($user);
+            }
+
+            $parameters = [
+                'grant_type' => 'password',
+                'client_id' => $client->id,
+                'client_secret' => $client->secret,
+                'username' => $request->email,
+                'password' => $request->password,
+                'scope' => $request->scope,
+            ];
+
+            $headers = [
+                'Accept' => 'application/json',
+            ];
+
+            $user['token'] = $this->getToken('POST', 'oauth/token', $parameters, $headers);
+
             return response()->json($user);
         }
 
@@ -241,5 +268,33 @@ class UserController extends Controller
         $user->forceDelete();
 
         return response(null, 204);
+    }
+
+    /**
+     * Request for token.
+     *
+     * @param $method
+     * @param $uri
+     * @param array $parameters
+     * @param array $headers
+     * @return null|\mixed token
+     */
+    private function getToken($method, $uri, $parameters = [], $headers = [])
+    {
+        $request = Request::create($uri, $method, $parameters, [], [], [], null);
+        $request->headers->add($headers);
+
+        try {
+            $response = app()->handle($request);
+
+            return json_decode((string) $response->getContent(), true);
+        } catch (\Exception $e) {
+            Log::error(json_encode([
+                'code' => $e->getCode(),
+                'message' => $e->getMessage(),
+            ]));
+
+            return null;
+        }
     }
 }

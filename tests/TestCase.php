@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Laravel\Passport\Passport;
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -23,7 +23,7 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Create client app
+     * Create client app.
      * @return void
      */
     private function createClient()

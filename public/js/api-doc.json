@@ -291,6 +291,15 @@
                     "application/json"
                 ],
                 "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "3dacedb2-b865-4192-87ed-0fc29ffefc26"
+                    }
                 ],
                 "x-code-samples": [
                     {
@@ -327,6 +336,15 @@
                 ],
                 "parameters": [
                     {
+                        "name": "user",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "3dacedb2-b865-4192-87ed-0fc29ffefc26"
+                    },
+                    {
                         "name": "name",
                         "in": "formData",
                         "description": "Full name",
@@ -340,6 +358,7 @@
                         "description": "Email address",
                         "required": false,
                         "type": "string",
+                        "format": "email",
                         "example": "jdoe@example.com"
                     },
                     {
@@ -348,6 +367,7 @@
                         "description": "When the user verified their account (using email link).",
                         "required": false,
                         "type": "datetime",
+                        "format": "Y-M-D h:i:s",
                         "example": "2018-10-18 16:36:04"
                     }
                 ],
@@ -402,6 +422,15 @@
                     "application/json"
                 ],
                 "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "3dacedb2-b865-4192-87ed-0fc29ffefc26"
+                    }
                 ],
                 "x-code-samples": [
                     {
@@ -440,6 +469,15 @@
                 ],
                 "parameters": [
                     {
+                        "name": "user",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "3dacedb2-b865-4192-87ed-0fc29ffefc26"
+                    },
+                    {
                         "name": "name",
                         "in": "formData",
                         "description": "Full name",
@@ -453,6 +491,7 @@
                         "description": "Email address",
                         "required": false,
                         "type": "string",
+                        "format": "email",
                         "example": "jdoe@example.com"
                     },
                     {
@@ -526,6 +565,15 @@
                     "application/json"
                 ],
                 "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "3dacedb2-b865-4192-87ed-0fc29ffefc26"
+                    }
                 ],
                 "x-code-samples": [
                     {
@@ -571,6 +619,15 @@
                     "application/json"
                 ],
                 "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "3dacedb2-b865-4192-87ed-0fc29ffefc26"
+                    }
                 ],
                 "x-code-samples": [
                     {
