@@ -44,4 +44,32 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $dates = ['email_verified_at', 'deleted_at'];
+
+    #region: relationships
+
+    /**
+     * User posts.
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'post_id', 'id');
+    }
+
+    /**
+     * User comments.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'comment_id', 'id');
+    }
+
+    /**
+     * User posts' | comments' likes.
+     */
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'user_id', 'id');
+    }
+
+    #endregion
 }
