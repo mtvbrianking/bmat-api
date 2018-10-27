@@ -17,7 +17,8 @@ class CreateLikesTable extends Migration
             $table->increments('id');
             $table->uuid('user_id');
             $table->integer('likeable_id')->unsigned();
-            $table->enum('likable_type', ['App\Post', 'App\Comment'])->default('App\Post');
+            //$table->enum('likeable_type', ['App/Post', 'App/Comment'])->default('App/Post');
+            $table->string('likeable_type', 20);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');

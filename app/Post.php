@@ -110,7 +110,7 @@ class Post extends Model
      */
     public function likes()
     {
-        return $this->morphMany(Like::class, 'likeable', Post::class);
+        return $this->morphMany(Like::class, 'likeable', 'likeable_type');
     }
 
     #endregion

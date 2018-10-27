@@ -109,7 +109,7 @@ class Comment extends Model
      */
     public function likes()
     {
-        return $this->morphMany(Like::class, 'likeable', Comment::class);
+        return $this->morphMany(Like::class, 'likeable', 'likeable_type');
     }
 
     #endregion

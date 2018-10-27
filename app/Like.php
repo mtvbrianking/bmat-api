@@ -86,23 +86,7 @@ class Like extends Model
      */
     public function liked()
     {
-        return $this->morphTo(Like::class, 'likeable', 'likeable_id');
-    }
-
-    /**
-     * Liked post.
-     */
-    public function post()
-    {
-        //
-    }
-
-    /**
-     * Liked comment.
-     */
-    public function comment()
-    {
-        //
+        return $this->morphTo(Like::class, 'likeable_type', 'likeable_id');
     }
 
     #endregion
