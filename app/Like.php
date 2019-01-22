@@ -40,7 +40,7 @@ class Like extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
+
     ];
 
     /**
