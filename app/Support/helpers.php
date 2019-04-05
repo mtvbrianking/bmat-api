@@ -1,6 +1,6 @@
 <?php
 
-if (! function_exists('greet')) {
+if (! function_exists('get_auth_client')) {
     /**
      * Get authenticated client application.
      *

@@ -295,6 +295,10 @@ class UserController extends Controller
      * @param $uri
      * @param array $parameters
      * @param array $headers
+     *
+     * @link https://blog.antoine-augusti.fr/2014/04/laravel-calling-your-api/
+     * @link https://github.com/symfony/http-foundation/blob/4.2/Request.php#L309
+     *
      * @return null|\mixed token
      */
     private function getToken($method, $uri, $parameters = [], $headers = [])
