@@ -30,8 +30,8 @@ class CreatePostTagTable extends Migration
     public function down()
     {
         Schema::table('post_tag', function (Blueprint $table) {
-            $table->dropForeign(['post_id',]);
-            $table->dropForeign(['tag_name',]);
+            $table->dropForeign(['post_id']);
+            $table->dropForeign(['tag_name']);
         });
 
         Schema::dropIfExists('post_tag');

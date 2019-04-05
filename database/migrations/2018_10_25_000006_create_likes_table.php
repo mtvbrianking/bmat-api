@@ -33,7 +33,7 @@ class CreateLikesTable extends Migration
     public function down()
     {
         Schema::table('likes', function (Blueprint $table) {
-            $table->dropForeign(['user_id',]);
+            $table->dropForeign(['user_id']);
         });
 
         Schema::dropIfExists('likes');

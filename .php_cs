@@ -3,7 +3,11 @@
 $rules = [
     '@PSR2' => true,
     'array_syntax' => ['syntax' => 'short'],
+    'no_trailing_comma_in_singleline_array' => true,
     'no_multiline_whitespace_before_semicolons' => true,
+    'blank_line_before_statement' => [
+        'statements' => ['return']
+    ],
     'no_short_echo_tag' => true,
     'no_unused_imports' => true,
     'not_operator_with_successor_space' => true,
