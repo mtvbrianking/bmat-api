@@ -15,6 +15,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    @yield('extra-css')
 </head>
 <body>
     <div id="app">
@@ -75,24 +77,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 
-    <script type="text/javascript">
-        window.$.ajaxSetup({
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        window.$.ajax({
-            type: 'GET',
-            url: 'api/v1/user',
-            success: function (response) {
-                console.log(response);
-            },
-            error: function (xhr) {
-                console.error(xhr.responseText);
-            }
-        });
+    @stack('extra-js')
     </script>
 </body>
 </html>

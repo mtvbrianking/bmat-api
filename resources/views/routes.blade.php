@@ -2,6 +2,15 @@
 
 @section('extra-css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/css/dataTables.bootstrap4.min.css" />
+    <style type="text/css">
+        .card-header h4.title {
+            margin-bottom: 0;
+        }
+
+        td label {
+            margin-bottom: 0;
+        }
+    </style>
 @endsection
 
 @push('extra-js')
