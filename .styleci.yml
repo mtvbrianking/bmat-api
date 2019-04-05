@@ -4,11 +4,11 @@ preset: laravel
 risky: false
 
 enabled:
-  - single_quote
-  - phpdoc_summary
+  # - single_quote
+  # - phpdoc_summary
 
 disabled:
-  - self_accessor
+  # - self_accessor
 
 finder:
   exclude:
