@@ -70,7 +70,7 @@ class Comment extends Model
 
     ];
 
-    #region: relationships
+    // relationships
 
     /**
      * Commenter.
@@ -112,17 +112,9 @@ class Comment extends Model
         return $this->morphMany(Like::class, 'likeable', 'likeable_type');
     }
 
-    #endregion
+    // mutators
 
-    #region: mutators
+    // accessors
 
-    #endregion
-
-    #region: accessors
-
-    #endregion
-
-    #region: scopes
-
-    #endregion
+    // scopes
 }

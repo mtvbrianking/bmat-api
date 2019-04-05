@@ -5,7 +5,9 @@ if (! function_exists('get_auth_client')) {
      * Get authenticated client application.
      *
      * @link https://github.com/laravel/passport/issues/124#issuecomment-252434309
+     *
      * @param \Illuminate\Http\Request $request
+     *
      * @return string
      */
     function get_auth_client($request)

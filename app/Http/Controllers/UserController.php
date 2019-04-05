@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -22,15 +22,17 @@ class UserController extends Controller
      * Log the user out of the api.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         $access_token = $request->user()->token();
 
         DB::table('oauth_refresh_tokens')
             ->where('access_token_id', $access_token->id)
             ->update([
-                'revoked' => true
+                'revoked' => true,
             ]);
 
         $access_token->revoke();
@@ -53,8 +55,10 @@ class UserController extends Controller
      * Store a newly created user.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Illuminate\Validation\ValidationException
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -79,6 +83,7 @@ class UserController extends Controller
      * Display the specified user.
      *
      * @param string $id User ID
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
@@ -97,8 +102,10 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param string $id User ID
-     * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Illuminate\Validation\ValidationException
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
@@ -128,8 +135,10 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param string $id User ID
-     * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Illuminate\Validation\ValidationException
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function updateProfile(Request $request, $id)
     {
@@ -166,8 +175,10 @@ class UserController extends Controller
      * Remove user.
      *
      * @param string $id User ID
-     * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Exception If no primary key defined on model.
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function trash($id)
     {
@@ -186,6 +197,7 @@ class UserController extends Controller
      * Restore user.
      *
      * @param string $id User ID
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function restore($id)
@@ -205,6 +217,7 @@ class UserController extends Controller
      * Permanently remove user from storage.
      *
      * @param string $id User ID
+     *
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      */
     public function destroy($id)

@@ -45,7 +45,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $dates = ['email_verified_at', 'deleted_at'];
 
-    #region: relationships
+    // relationships
 
     /**
      * User posts.
@@ -70,6 +70,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Like::class, 'user_id', 'id');
     }
-
-    #endregion
 }

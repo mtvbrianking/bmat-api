@@ -69,6 +69,7 @@ class UserControllerTest extends TestCase
     /**
      * Can obtain password grant type token.
      * This will be used to log into the api (authenticate user) - literally.
+     *
      * @test
      * @group passing
      */

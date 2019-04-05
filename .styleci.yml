@@ -1,1 +1,20 @@
 preset: laravel
+
+# https://docs.styleci.io/standalone-php#risky
+risky: false
+
+enabled:
+  - single_quote
+  - phpdoc_summary
+
+disabled:
+  - self_accessor
+
+finder:
+  exclude:
+    - "public"
+    - "resources"
+  name:
+    - "*.php"
+  not-name:
+    - "*blade.php"

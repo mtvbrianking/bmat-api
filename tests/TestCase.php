@@ -24,6 +24,7 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * Create client credentials grant client app.
+     *
      * @return void
      */
     private function createClient()
@@ -41,6 +42,7 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * Create password grant client app.
+     *
      * @return void
      */
     public function createPasswordClient()

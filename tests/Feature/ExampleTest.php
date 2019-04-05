@@ -8,7 +8,9 @@ class ExampleTest extends TestCase
 {
     /**
      * A basic test example.
+     *
      * @group passing
+     *
      * @return void
      */
     public function testBasicTest()

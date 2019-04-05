@@ -19,6 +19,7 @@
         "beyondcode/laravel-dump-server": "^1.0",
         "doctrine/dbal": "^2.8",
         "filp/whoops": "^2.0",
+        "friendsofphp/php-cs-fixer": "^2.14",
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^2.0",
@@ -61,6 +62,12 @@
             "php artisan ide-helper:generate",
             "php artisan ide-helper:meta",
             "php artisan ide-helper:models --nowrite"
+        ],
+        "cs-lint": [
+            "php-cs-fixer fix --dry-run --diff"
+        ],
+        "cs-fix": [
+            "php-cs-fixer fix"
         ]
     },
     "config": {

@@ -70,10 +70,10 @@ class Category extends Model
 
     ];
 
-    #region: relationships
+    // Relationships
 
     /**
-     * Posts in this category
+     * Posts in this category.
      */
     public function posts()
     {
@@ -81,7 +81,7 @@ class Category extends Model
     }
 
     /**
-     * Parent category
+     * Parent category.
      */
     public function parent()
     {
@@ -89,21 +89,20 @@ class Category extends Model
     }
 
     /**
-     * Sub categories;
+     * Sub categories;.
      */
     public function children()
     {
         return $this->hasMany(Category::class, 'parent_name', 'name');
     }
 
-    #endregion
-
-    #region: mutators
+    // Mutators
 
     /**
      * Set category name; slug-case.
      *
      * @param  string  $value
+     *
      * @return void
      */
     public function setNameAttribute($value)
@@ -115,6 +114,7 @@ class Category extends Model
      * Set parent category name; slug-case.
      *
      * @param  string  $value
+     *
      * @return void
      */
     public function setParentNameAttribute($value)
@@ -122,38 +122,29 @@ class Category extends Model
         $this->attributes['parent_name'] = str_slug(str_singular($value));
     }
 
-    #endregion
-
-    #region: accessors
+    // Accessors
 
     /**
      * Get category name; Title Case.
      *
      * @param  string  $value
+     *
      * @return string
      */
     public function getNameAttribute($value)
     {
-        return str_replace("-"," ", title_case($value));
+        return str_replace('-', ' ', title_case($value));
     }
 
     /**
      * Get parent category name; Title Case.
      *
      * @param  string  $value
+     *
      * @return string
      */
     public function getParentNameAttribute($value)
     {
-        return str_replace("-"," ", title_case($value));
+        return str_replace('-', ' ', title_case($value));
     }
-
-    #endregion
-
-    #region: scopes
-
-
-
-    #endregion
-
 }

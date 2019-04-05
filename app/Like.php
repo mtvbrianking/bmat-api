@@ -70,7 +70,7 @@ class Like extends Model
 
     ];
 
-    #region: relationships
+    // relationships
 
     /**
      * Admirer.
@@ -82,24 +82,16 @@ class Like extends Model
     }
 
     /**
-     * Liked post | comment
+     * Liked post | comment.
      */
     public function liked()
     {
         return $this->morphTo(Like::class, 'likeable_type', 'likeable_id');
     }
 
-    #endregion
+    // mutators
 
-    #region: mutators
+    // accessors
 
-    #endregion
-
-    #region: accessors
-
-    #endregion
-
-    #region: scopes
-
-    #endregion
+    // scopes
 }

@@ -71,7 +71,7 @@ class Post extends Model
 
     ];
 
-    #region: relationships
+    // relationships
 
     /**
      * Post author.
@@ -113,14 +113,13 @@ class Post extends Model
         return $this->morphMany(Like::class, 'likeable', 'likeable_type');
     }
 
-    #endregion
-
-    #region: mutators
+    // mutators
 
     /**
      * Set post title; slug-case.
      *
      * @param  string $value
+     *
      * @return void
      */
     public function setTitleAttribute($value)
@@ -128,24 +127,19 @@ class Post extends Model
         $this->attributes['title'] = str_slug($value);
     }
 
-    #endregion
-
-    #region: accessors
+    // accessors
 
     /**
      * Get post title; Title Case.
      *
      * @param  string $value
+     *
      * @return string
      */
     public function getTitleAttribute($value)
     {
-        return str_replace("-", " ", title_case($value));
+        return str_replace('-', ' ', title_case($value));
     }
 
-    #endregion
-
-    #region: scopes
-
-    #endregion
+    // scopes
 }

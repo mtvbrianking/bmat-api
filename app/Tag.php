@@ -70,7 +70,7 @@ class Tag extends Model
 
     ];
 
-    #region: relationships
+    // relationships
 
     /**
      * Tagged posts.
@@ -80,14 +80,13 @@ class Tag extends Model
         return $this->belongsToMany(Post::class, 'post_tag', 'tag_name');
     }
 
-    #endregion
-
-    #region: mutators
+    // mutators
 
     /**
      * Set category name; slug-case.
      *
      * @param  string  $value
+     *
      * @return void
      */
     public function setNameAttribute($value)
@@ -95,14 +94,13 @@ class Tag extends Model
         $this->attributes['name'] = str_slug($value);
     }
 
-    #endregion
-
-    #region: accessors
+    // accessors
 
     /**
      * Get tag name; StudlyCase.
      *
      * @param  string  $value
+     *
      * @return string
      */
     public function getNameAttribute($value)
@@ -110,9 +108,5 @@ class Tag extends Model
         return studly_case($value);
     }
 
-    #endregion
-
-    #region: scopes
-
-    #endregion
+    // scopes
 }
