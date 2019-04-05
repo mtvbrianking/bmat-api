@@ -19,53 +19,6 @@ class UserController extends Controller
     }
 
     /**
-     * Authenticate user.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function authenticate(Request $request)
-    {
-        $this->validate($request, [
-            'email' => 'required|email',
-            'password' => 'required',
-            'scope' => 'sometimes|string',
-        ]);
-
-        $client = get_auth_client($request);
-
-        // If isn't a password client; don't issue access token...
-        if (! $client->password_client) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
-
-        $user = User::where('email', $request->email)->first();
-
-        if ($user && password_verify($request->password, $user->password)) {
-
-            $parameters = [
-                'grant_type' => 'password',
-                'client_id' => $client->id,
-                'client_secret' => $client->secret,
-                'username' => $request->email,
-                'password' => $request->password,
-                'scope' => $request->scope,
-            ];
-
-            $headers = [
-                'Accept' => 'application/json',
-            ];
-
-            $user['token'] = $this->getToken('POST', 'oauth/token', $parameters, $headers);
-
-            return response()->json($user);
-        }
-
-        return response()->json(['errors' => ['email' => 'Wrong email or password.']], 422);
-    }
-
-    /**
      * Log the user out of the api.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -94,16 +47,6 @@ class UserController extends Controller
         $users = User::withTrashed()->get();
 
         return response()->json(['users' => $users]);
-    }
-
-    /**
-     * Show the form for creating a new user.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return response(null, 501);
     }
 
     /**
@@ -147,17 +90,6 @@ class UserController extends Controller
         }
 
         return response()->json($user);
-    }
-
-    /**
-     * Show the form for editing the specified user.
-     *
-     * @param string $id User ID
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        return response(null, 501);
     }
 
     /**

@@ -21,11 +21,8 @@ Route::pattern('user', '^([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-
 Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
     Route::get('/', 'UserController@index')->name('index');
     Route::get('/{user}', 'UserController@show')->name('show');
-    Route::post('/auth', 'UserController@authenticate')->middleware('auth.client')->name('auth');
     Route::post('/logout', 'UserController@logout')->name('auth.logout');
-    Route::get('/create', 'UserController@create')->name('create');
     Route::post('/', 'UserController@store')->middleware('auth.client')->name('store');
-    Route::get('/{user}/edit', 'UserController@edit')->name('edit');
     Route::put('/{user}', 'UserController@update')->name('update');
     Route::put('/{user}/profile', 'UserController@updateProfile')->name('profile.update');
     Route::put('/{user}/trash', 'UserController@trash')->name('trash');

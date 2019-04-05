@@ -23,14 +23,14 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Create client app.
+     * Create client credentials grant client app.
      * @return void
      */
     private function createClient()
     {
         $this->client = new \Laravel\Passport\Client();
         $this->client->user_id = null;
-        $this->client->name = 'dev-client-grant-client';
+        $this->client->name = 'test-client-grant-client';
         $this->client->secret = str_random('40');
         $this->client->redirect = '';
         $this->client->personal_access_client = false;
@@ -40,7 +40,24 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Request client app access token.
+     * Create password grant client app.
+     * @return void
+     */
+    public function createPasswordClient()
+    {
+        $this->client = new \Laravel\Passport\Client();
+        $this->client->user_id = null;
+        $this->client->name = 'test-password-grant-client';
+        $this->client->secret = str_random('40');
+        $this->client->redirect = '';
+        $this->client->personal_access_client = false;
+        $this->client->password_client = true;
+        $this->client->revoked = false;
+        $this->client->save();
+    }
+
+    /**
+     * Request client credentials grant access token.
      *
      * @return string access token
      */

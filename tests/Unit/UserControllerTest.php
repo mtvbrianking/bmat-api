@@ -7,7 +7,7 @@ use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class UserTest extends TestCase
+class UserControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -17,7 +17,7 @@ class UserTest extends TestCase
      * @test
      * @group passing
      */
-    public function getUsers()
+    public function can_get_users()
     {
         $user = factory(User::class)->create();
 
@@ -29,27 +29,12 @@ class UserTest extends TestCase
     }
 
     /**
-     * Visit create user.
-     *
-     * @test
-     * @group passing
-     */
-    public function visitCreateUser()
-    {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user, 'api')->json('GET', 'api/v1/users/create');
-
-        $response->assertStatus(501);
-    }
-
-    /**
      * Register user.
      *
      * @test
      * @group passing
      */
-    public function createUser()
+    public function can_register_user()
     {
         $user = factory(User::class)->create();
 
@@ -72,7 +57,7 @@ class UserTest extends TestCase
      * @test
      * @group passing
      */
-    public function getUser()
+    public function can_get_user()
     {
         $user = factory(User::class)->create();
 
@@ -82,42 +67,32 @@ class UserTest extends TestCase
     }
 
     /**
-     * Authenticate user.
-     *
+     * Can obtain password grant type token.
+     * This will be used to log into the api (authenticate user) - literally.
      * @test
      * @group passing
      */
-    public function authenticateUser()
+    public function can_obtain_password_grant_type_token()
     {
         $user = factory(User::class)->create([
             'email' => 'jdoe@example.com',
             'password' => Hash::make('gJrFhC2B-!Y!4CTk'),
         ]);
 
+        $this->createPasswordClient();
+
         $response = $this->withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer '.$this->getClientToken(),
-        ])->actingAs($user, 'api')->json('POST', 'api/v1/users/auth', [
-            'email' => 'jdoe@example.com',
+        ])->call('POST', 'oauth/token', [
+            'grant_type' => 'password',
+            'client_id' => $this->client->id,
+            'client_secret' => $this->client->secret,
+            'username' => $user->email,
             'password' => 'gJrFhC2B-!Y!4CTk',
+            'scope' => '*',
         ]);
 
         $response->assertStatus(200);
-    }
-
-    /**
-     * Visit edit user.
-     *
-     * @test
-     * @group passing
-     */
-    public function visitEditUser()
-    {
-        $user = factory(User::class)->create();
-
-        $response = $this->actingAs($user, 'api')->json('GET', 'api/v1/users/'.$user->id.'/edit');
-
-        $response->assertStatus(501);
     }
 
     /**
@@ -126,7 +101,7 @@ class UserTest extends TestCase
      * @test
      * @group passing
      */
-    public function updateUser()
+    public function can_update_user_details()
     {
         $user = factory(User::class)->create();
 
@@ -147,7 +122,7 @@ class UserTest extends TestCase
      * @test
      * @group passing
      */
-    public function updateUserProfile()
+    public function can_update_user_profile()
     {
         $user = factory(User::class)->create([
             'password' => Hash::make('gJrFhC2B-!Y!4CTk'),
@@ -170,7 +145,7 @@ class UserTest extends TestCase
      * @test
      * @group passing
      */
-    public function removeUser()
+    public function can_delete_user_temporarily()
     {
         $user = factory(User::class)->create();
 
@@ -185,7 +160,7 @@ class UserTest extends TestCase
      * @test
      * @group passing
      */
-    public function restoreUser()
+    public function can_not_restore_non_deleted_user()
     {
         $user = factory(User::class)->create();
 
@@ -200,7 +175,7 @@ class UserTest extends TestCase
      * @test
      * @group passing
      */
-    public function restoreTrashedUser()
+    public function can_restore_temporarily_deleted_user()
     {
         $user = factory(User::class)->create();
 
@@ -217,7 +192,7 @@ class UserTest extends TestCase
      * @test
      * @group passing
      */
-    public function deleteUser()
+    public function can_permanently_deleted_user()
     {
         $user = factory(User::class)->create();
 
