@@ -14,6 +14,7 @@ if (! function_exists('get_auth_client')) {
     {
         $bearerToken = $request->bearerToken();
         $tokenId = (new \Lcobucci\JWT\Parser())->parse($bearerToken)->getHeader('jti');
+
         return \Laravel\Passport\Token::find($tokenId)->client;
     }
 }

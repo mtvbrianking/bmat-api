@@ -36,6 +36,7 @@ class UserController extends Controller
             ]);
 
         $access_token->revoke();
+
         return response()->json(null, 204);
     }
 
