@@ -1,5 +1,7 @@
 <?php
 
+// https://mlocati.github.io/php-cs-fixer-configurator/
+
 $rules = [
     '@PSR2' => true,
     'array_syntax' => ['syntax' => 'short'],

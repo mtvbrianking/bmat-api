@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>API Usage Documentation</title>
-    <!-- needed for adaptive design -->
+    <!-- Needed for adaptive design -->
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<redoc spec-url='{{ asset('js/api-doc.json') }}'></redoc>
+<redoc spec-url='{{ asset('js/api-usage.json') }}'></redoc>
 
 {{-- <script src="https://rebilly.github.io/ReDoc/releases/latest/redoc.min.js"></script> --}}
 

@@ -11,8 +11,12 @@
 |
 */
 
-Auth::routes(['verify' => true]);
+Auth::routes(['verify' => false]);
 
-Route::get('/', 'HomeController@index')->middleware('verified')->name('home');
+Route::get('/', 'FrontController@index')->name('home');
 
-Route::get('/doc', 'HomeController@showDoc')->name('api.doc');
+Route::get('/usage', 'FrontController@showApiUsageDoc')->name('doc.usage');
+
+Route::get('/source', 'FrontController@showApiCodeDoc')->name('doc.source');
+
+Route::get('/routes', 'FrontController@showApplicationRoutes')->name('routes');
