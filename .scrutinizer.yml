@@ -3,10 +3,9 @@
 # tests: true
 
 filter:
-  excluded_paths: [
-    docs,
-    tests/*
-  ]
+  excluded_paths:
+    - docs/*
+    - tests/*
 
 checks:
   php:
