@@ -22,7 +22,7 @@ Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
     Route::get('/', 'UserController@index')->name('index');
     Route::get('/{user}', 'UserController@show')->name('show');
     Route::post('/logout', 'UserController@logout')->name('auth.logout');
-    Route::post('/', 'UserController@store')->middleware('auth.client')->name('store');
+    Route::post('/', 'UserController@store')->middleware(['auth.client:register-user'])->name('store');
     Route::put('/{user}', 'UserController@update')->name('update');
     Route::put('/{user}/profile', 'UserController@updateProfile')->name('profile.update');
     Route::put('/{user}/trash', 'UserController@trash')->name('trash');

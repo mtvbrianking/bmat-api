@@ -30,5 +30,10 @@ class AuthServiceProvider extends ServiceProvider
         Passport::tokensExpireIn(now()->addMinutes(60));
 
         Passport::refreshTokensExpireIn(now()->addHours(24));
+
+        Passport::tokensCan([
+            'register-user' => 'Register user accounts',
+            'reset-user-password' => 'Reset user account password',
+        ]);
     }
 }

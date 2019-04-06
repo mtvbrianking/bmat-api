@@ -29,7 +29,32 @@ class UserControllerTest extends TestCase
     }
 
     /**
-     * Register user.
+     * Can't register user without scope.
+     * Requires 'register-user' scope.
+     *
+     * @test
+     * @group passing
+     */
+    public function cant_register_user_without_scope()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '.$this->getClientAccessToken(),
+        ])->actingAs($user, 'api')->json('POST', 'api/v1/users', [
+            'name' => 'John Doe',
+            'email' => 'jdoe@example.com',
+            'password' => '!B>z5RJ%dUE$F52_',
+            'password_confirmation' => '!B>z5RJ%dUE$F52_',
+        ]);
+
+        $response->assertStatus(403);
+    }
+
+    /**
+     * Can register user.
+     * Requires 'register-user' scope.
      *
      * @test
      * @group passing
@@ -38,9 +63,11 @@ class UserControllerTest extends TestCase
     {
         $user = factory(User::class)->create();
 
+        $scopes = ['register-user'];
+
         $response = $this->withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer '.$this->getClientToken(),
+            'Authorization' => 'Bearer '.$this->getClientAccessToken($scopes),
         ])->actingAs($user, 'api')->json('POST', 'api/v1/users', [
             'name' => 'John Doe',
             'email' => 'jdoe@example.com',

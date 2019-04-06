@@ -61,9 +61,11 @@ abstract class TestCase extends BaseTestCase
     /**
      * Request client credentials grant access token.
      *
+     * @param array $scopes
+     *
      * @return string access token
      */
-    protected function getClientToken()
+    protected function getClientAccessToken($scopes = [])
     {
         $this->createClient();
 
@@ -74,9 +76,11 @@ abstract class TestCase extends BaseTestCase
             'grant_type' => 'client_credentials',
             'client_id' => $this->client->id,
             'client_secret' => $this->client->secret,
-            'scope' => '',
+            'scope' => implode(' ', $scopes),
         ]);
 
-        return json_decode((string) $response->getContent(), true)['access_token'];
+        $token = json_decode((string) $response->getContent(), true);
+
+        return $token['access_token'];
     }
 }
