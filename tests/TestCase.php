@@ -63,15 +63,14 @@ abstract class TestCase extends BaseTestCase
      *
      * @param array $scopes
      *
-     * @return string access token
+     * @return array token
      */
-    protected function getClientAccessToken($scopes = [])
+    protected function getClientToken($scopes = [])
     {
         $this->createClient();
 
         $response = $this->withHeaders([
             'Accept' => 'application/json',
-            // 'Authorization' => 'Basic '.base64_encode($client->id.':'.$client->secret),
         ])->call('POST', 'oauth/token', [
             'grant_type' => 'client_credentials',
             'client_id' => $this->client->id,
@@ -79,8 +78,33 @@ abstract class TestCase extends BaseTestCase
             'scope' => implode(' ', $scopes),
         ]);
 
-        $token = json_decode((string) $response->getContent(), true);
+        return json_decode((string) $response->getContent(), true);
+    }
 
-        return $token['access_token'];
+    /**
+     * Request password grant access token.
+     *
+     * @param string $username
+     * @param string $password
+     * @param array $scopes
+     *
+     * @return array token
+     */
+    protected function getPasswordToken($username, $password, $scopes = [])
+    {
+        $this->createPasswordClient();
+
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+        ])->call('POST', 'oauth/token', [
+            'grant_type' => 'password',
+            'client_id' => $this->client->id,
+            'client_secret' => $this->client->secret,
+            'username' => $username,
+            'password' => $password,
+            'scope' => implode(' ', $scopes),
+        ]);
+
+        return json_decode((string) $response->getContent(), true);
     }
 }

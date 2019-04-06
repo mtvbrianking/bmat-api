@@ -27,15 +27,16 @@ class UserController extends Controller
      */
     public function logout(Request $request)
     {
-        $access_token = $request->user()->token();
+        $token = $request->user()->token();
 
+        $token->revoke();
+
+        // Revoke refresh token
         DB::table('oauth_refresh_tokens')
-            ->where('access_token_id', $access_token->id)
+            ->where('access_token_id', $token->id)
             ->update([
                 'revoked' => true,
             ]);
-
-        $access_token->revoke();
 
         return response()->json(null, 204);
     }
