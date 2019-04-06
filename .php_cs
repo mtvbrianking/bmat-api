@@ -36,6 +36,7 @@ $rules = [
 
 $excludes = [
     'bootstrap/cache',
+    'docs',
     'node_modules',
     'public',
     'resources',

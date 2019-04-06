@@ -63,12 +63,11 @@
             "php artisan ide-helper:meta",
             "php artisan ide-helper:models --nowrite"
         ],
-        "cs-lint": [
-            "php-cs-fixer fix --dry-run --diff"
-        ],
-        "cs-fix": [
-            "php-cs-fixer fix"
-        ]
+        "cs-lint": "php-cs-fixer fix --dry-run --diff",
+        "cs-fix": "php-cs-fixer fix",
+        "doc": "phpdoc -c phpdoc.xml",
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --colors --coverage-html coverage"
     },
     "config": {
         "preferred-install": "dist",

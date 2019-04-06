@@ -12,6 +12,7 @@ disabled:
 
 finder:
   exclude:
+    - "docs"
     - "public"
     - "resources"
   name:
