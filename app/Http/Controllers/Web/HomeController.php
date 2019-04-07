@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 
-class FrontController extends Controller
+class HomeController extends Controller
 {
     /**
      * Constructor.
