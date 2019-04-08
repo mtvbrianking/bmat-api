@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,29 +15,6 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api')->except(['store']);
-    }
-
-    /**
-     * Log the user out of the api.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function logout(Request $request)
-    {
-        $token = $request->user()->token();
-
-        $token->revoke();
-
-        // Revoke refresh token
-        DB::table('oauth_refresh_tokens')
-            ->where('access_token_id', $token->id)
-            ->update([
-                'revoked' => true,
-            ]);
-
-        return response()->json(null, 204);
     }
 
     /**

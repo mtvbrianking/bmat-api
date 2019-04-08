@@ -8,7 +8,7 @@ if (! function_exists('get_auth_client')) {
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @return string
+     * @return \Laravel\Passport\Client
      */
     function get_auth_client($request)
     {

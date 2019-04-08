@@ -4,7 +4,6 @@ namespace Tests\Unit;
 
 use App\User;
 use Tests\TestCase;
-use Lcobucci\JWT\Parser;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -81,41 +80,6 @@ class UserControllerTest extends TestCase
         ]);
 
         $response->assertStatus(201);
-    }
-
-    /**
-     * User logout.
-     *
-     * @test
-     * @group passing
-     */
-    public function can_log_out()
-    {
-        $user = factory(User::class)->create([
-            'email' => 'jdoe@example.com',
-            'password' => Hash::make('gJrFhC2B-!Y!4CTk'),
-        ]);
-
-        $token = $this->getPasswordToken($user->email, 'gJrFhC2B-!Y!4CTk');
-
-        $response = $this->withHeaders([
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer '.$token['access_token'],
-        ])->json('POST', 'api/v1/users/logout', []);
-
-        $tokenId = (new Parser())->parse($token['access_token'])->getHeader('jti');
-
-        $this->assertDatabaseHas('oauth_access_tokens', [
-            'id' => $tokenId,
-            'revoked' => 1,
-        ]);
-
-        $this->assertDatabaseHas('oauth_refresh_tokens', [
-            'access_token_id' => $tokenId,
-            'revoked' => 1,
-        ]);
-
-        $response->assertStatus(204);
     }
 
     /**
