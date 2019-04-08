@@ -32,7 +32,7 @@ class LoginControllerTest extends TestCase
         $response = $this->withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$token['access_token'],
-        ])->actingAs($user, 'api')->json('POST', 'api/v1/auth/login', [
+        ])->json('POST', 'api/v1/auth/login', [
             'email' => 'jdoe@example.com',
             'password' => 'gJrFhC2B-!Y!4CTk',
         ]);

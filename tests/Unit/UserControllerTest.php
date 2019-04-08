@@ -44,7 +44,7 @@ class UserControllerTest extends TestCase
         $response = $this->withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$token['access_token'],
-        ])->actingAs($user, 'api')->json('POST', 'api/v1/users', [
+        ])->json('POST', 'api/v1/users', [
             'name' => 'John Doe',
             'email' => 'jdoe@example.com',
             'password' => '!B>z5RJ%dUE$F52_',
@@ -63,8 +63,6 @@ class UserControllerTest extends TestCase
      */
     public function can_register_user()
     {
-        $user = factory(User::class)->create();
-
         $scopes = ['register-user'];
 
         $token = $this->getClientToken($scopes);
@@ -72,7 +70,7 @@ class UserControllerTest extends TestCase
         $response = $this->withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$token['access_token'],
-        ])->actingAs($user, 'api')->json('POST', 'api/v1/users', [
+        ])->json('POST', 'api/v1/users', [
             'name' => 'John Doe',
             'email' => 'jdoe@example.com',
             'password' => '!B>z5RJ%dUE$F52_',

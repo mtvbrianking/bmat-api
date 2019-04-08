@@ -26,7 +26,7 @@ Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
 Route::group(['namespace' => 'Auth', 'prefix' => 'auth', 'as' => ''], function () {
 
     // Or - UserController@store
-    Route::post('register', 'RegisterController@register')->middleware(['auth.client:register-user']);
+    // Route::post('register', 'RegisterController@register')->middleware(['auth.client:register-user']);
 
     // Authentication
     Route::post('login', 'LoginController@login'); // ->middleware(['auth.client:authenticate-user']);

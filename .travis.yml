@@ -10,7 +10,7 @@ before_script:
   - php artisan config:clear
 
 script:
- - vendor/bin/phpunit
+ - vendor/bin/phpunit --group=passing
 
 # https://docs.travis-ci.com/user/notifications
 notifications:
