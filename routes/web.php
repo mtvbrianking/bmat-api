@@ -15,9 +15,9 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/usage', 'HomeController@showApiUsageDoc')->name('doc.usage');
 
-Route::get('/source', 'HomeController@showApiCodeDoc')->name('doc.source');
+Route::get('/source', 'HomeController@showSourceCodeDoc')->name('doc.source');
 
-Route::get('/routes', 'HomeController@showApplicationRoutes')->name('routes');
+Route::get('/routes', 'HomeController@showAppRoutes')->name('routes');
 
 // Illuminate\Routing\Router@auth
 // Illuminate\Routing\Router@emailVerification

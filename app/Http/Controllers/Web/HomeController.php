@@ -12,10 +12,10 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth')->except([
-        //     'showApiUsageDoc',
-        //     'showApiCodeDoc',
-        // ]);
+        $this->middleware('auth')->except([
+            'showApiUsageDoc',
+            'showSourceCodeDoc',
+        ]);
     }
 
     /**
@@ -43,7 +43,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function showApiCodeDoc()
+    public function showSourceCodeDoc()
     {
         return redirect(url('docs'));
     }
@@ -55,7 +55,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function showApplicationRoutes()
+    public function showAppRoutes()
     {
         if (config('app.log_level') == 'production') {
             abort(403);
