@@ -208,7 +208,7 @@ class PasswordControllerTest extends TestCase
 
         $reset_token = str_random(60);
 
-        $validity = config('app.password_reset_lifetime', 60) * 60 ;
+        $validity = config('app.password_reset_lifetime', 60) * 60;
 
         $now = date('Y-m-d H:i:s');
         $current_timestamp = strtotime($now);

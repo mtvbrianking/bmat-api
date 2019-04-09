@@ -6,7 +6,10 @@ $rules = [
     '@PSR2' => true,
     'array_syntax' => ['syntax' => 'short'],
     'no_trailing_comma_in_singleline_array' => true,
-    'no_multiline_whitespace_before_semicolons' => true,
+    'multiline_whitespace_before_semicolons' => [
+        'strategy' => 'no_multi_line',
+    ],
+    'no_singleline_whitespace_before_semicolons' => true,
     'blank_line_before_statement' => [
         'statements' => ['return']
     ],
