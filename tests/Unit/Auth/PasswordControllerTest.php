@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Auth;
 
+use App\User;
 use Tests\TestCase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,7 +16,7 @@ class PasswordControllerTest extends TestCase
      *
      * @test
      *
-     * @group failing
+     * @group passing
      */
     public function cant_generate_token_if_not_authorized()
     {
@@ -40,10 +41,12 @@ class PasswordControllerTest extends TestCase
      *
      * @test
      *
-     * @group failing
+     * @group passing
      */
     public function cant_generate_token_for_invalid_user()
     {
+        $this->withoutExceptionHandling();
+
         $user = factory(User::class)->create([
             'email' => 'jdoe@example.com',
         ]);
@@ -61,9 +64,17 @@ class PasswordControllerTest extends TestCase
 
         $response->assertStatus(422);
 
+        $response->assertJsonStructure([
+            'error' => [
+                'email',
+            ],
+        ]);
+
         $response->assertJson([
-            'errors' => [
-                'email' => 'Unknown user.',
+            'error' => [
+                'email' => [
+                    'The selected email is invalid.',
+                ],
             ],
         ]);
     }
@@ -73,7 +84,7 @@ class PasswordControllerTest extends TestCase
      *
      * @test
      *
-     * @group failing
+     * @group passing
      */
     public function can_generate_token()
     {
@@ -92,7 +103,11 @@ class PasswordControllerTest extends TestCase
             'email' => 'jdoe@example.com',
         ]);
 
-        $response->assertStatus(200);
+        $this->assertDatabaseHas('password_resets', [
+            'email' => 'jdoe@example.com',
+        ]);
+
+        $response->assertStatus(201);
 
         $response->assertJsonStructure([
             'token',
@@ -104,7 +119,7 @@ class PasswordControllerTest extends TestCase
      *
      * @test
      *
-     * @group failing
+     * @group passing
      */
     public function cant_reset_password_if_not_authorized()
     {
@@ -115,7 +130,7 @@ class PasswordControllerTest extends TestCase
         $token = str_random(60);
 
         DB::table('password_resets')->insert([
-            'email' => 'john@example.com',
+            'email' => 'jdoe@example.com',
             'token' => bcrypt($token),
             'created_at' => date('Y-m-d H:i:s'),
         ]);
@@ -125,7 +140,7 @@ class PasswordControllerTest extends TestCase
         $response = $this->withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$token['access_token'],
-        ])->json('POST', 'api/v1/auth/password/reset', [
+        ])->json('PUT', 'api/v1/auth/password/reset', [
             'email' => 'jdoe@example.com',
             'token' => $token,
         ]);
@@ -138,7 +153,7 @@ class PasswordControllerTest extends TestCase
      *
      * @test
      *
-     * @group failing
+     * @group passing
      */
     public function cant_reset_password_with_invalid_credentials()
     {
@@ -146,25 +161,36 @@ class PasswordControllerTest extends TestCase
             'email' => 'jdoe@example.com',
         ]);
 
-        $token = str_random(60);
+        $reset_token = str_random(60);
 
         DB::table('password_resets')->insert([
-            'email' => 'john@example.com',
-            'token' => bcrypt($token),
+            'email' => 'jdoe@example.com',
+            'token' => bcrypt($reset_token),
             'created_at' => date('Y-m-d H:i:s'),
         ]);
 
-        $token = $this->getClientToken();
+        $scopes = ['reset-password'];
+
+        $auth_token = $this->getClientToken($scopes);
 
         $response = $this->withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer '.$token['access_token'],
-        ])->json('POST', 'api/v1/auth/password/reset', [
+            'Authorization' => 'Bearer '.$auth_token['access_token'],
+        ])->json('PUT', 'api/v1/auth/password/reset', [
+            'token' => $reset_token,
             'email' => 'unknown@example.com',
-            'token' => $token,
+            'password' => 'Xc4qF!Ek',
+            'password_confirmation' => '5YQ-9TjO',
         ]);
 
         $response->assertStatus(422);
+
+        $response->assertJsonStructure([
+            'error' => [
+                'email',
+                'password',
+            ],
+        ]);
     }
 
     /**
@@ -172,7 +198,7 @@ class PasswordControllerTest extends TestCase
      *
      * @test
      *
-     * @group failing
+     * @group passing
      */
     public function can_reset_password_with_expired_token()
     {
@@ -180,31 +206,43 @@ class PasswordControllerTest extends TestCase
             'email' => 'jdoe@example.com',
         ]);
 
-        $token = str_random(60);
+        $reset_token = str_random(60);
 
-        $validity = config('app.password_reset_lifetime', 86400);
+        $validity = config('app.password_reset_lifetime', 60) * 60 ;
 
         $now = date('Y-m-d H:i:s');
         $current_timestamp = strtotime($now);
         $then = date('Y-m-d H:i:s', ($current_timestamp - $validity));
 
         DB::table('password_resets')->insert([
-            'email' => 'john@example.com',
-            'token' => bcrypt($token),
+            'email' => 'jdoe@example.com',
+            'token' => bcrypt($reset_token),
             'created_at' => $then,
         ]);
 
-        $token = $this->getClientToken();
+        $scopes = ['reset-password'];
+
+        $auth_token = $this->getClientToken($scopes);
 
         $response = $this->withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer '.$token['access_token'],
-        ])->json('POST', 'api/v1/auth/password/reset', [
+            'Authorization' => 'Bearer '.$auth_token['access_token'],
+        ])->json('PUT', 'api/v1/auth/password/reset', [
+            'token' => $reset_token,
             'email' => 'jdoe@example.com',
-            'token' => $token,
+            'password' => 'Xc4qF!Ek',
+            'password_confirmation' => 'Xc4qF!Ek',
         ]);
 
         $response->assertStatus(422);
+
+        $response->assertJson([
+            'error' => [
+                'token' => [
+                    'Expired token.',
+                ],
+            ],
+        ]);
     }
 
     /**
@@ -212,32 +250,49 @@ class PasswordControllerTest extends TestCase
      *
      * @test
      *
-     * @group failing
+     * @group passing
      */
     public function can_reset_password()
     {
         $user = factory(User::class)->create([
             'email' => 'jdoe@example.com',
+            'password' => 'C9mWvb+h',
         ]);
 
-        $token = str_random(60);
+        $reset_token = str_random(60);
 
         DB::table('password_resets')->insert([
-            'email' => 'john@example.com',
-            'token' => bcrypt($token),
+            'email' => 'jdoe@example.com',
+            'token' => bcrypt($reset_token),
             'created_at' => date('Y-m-d H:i:s'),
         ]);
 
-        $token = $this->getClientToken();
+        $scopes = ['reset-password'];
+
+        $auth_token = $this->getClientToken($scopes);
 
         $response = $this->withHeaders([
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer '.$token['access_token'],
-        ])->json('POST', 'api/v1/auth/password/reset', [
+            'Authorization' => 'Bearer '.$auth_token['access_token'],
+        ])->json('PUT', 'api/v1/auth/password/reset', [
+            'token' => $reset_token,
             'email' => 'jdoe@example.com',
-            'token' => $token,
+            'password' => 'Xc4qF!Ek',
+            'password_confirmation' => 'Xc4qF!Ek',
+        ]);
+
+        $user = User::where('email', 'jdoe@example.com')->first();
+
+        $this->assertTrue(password_verify('Xc4qF!Ek', $user->password));
+
+        $this->assertDatabaseMissing('password_resets', [
+            'email' => 'jdoe@example.com',
         ]);
 
         $response->assertStatus(200);
+
+        $response->assertJsonStructure([
+            'status',
+        ]);
     }
 }

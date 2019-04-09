@@ -23,6 +23,7 @@ Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
     Route::delete('/{user}', 'UserController@destroy')->name('destroy');
 });
 
+// Illuminate\Routing\Router@auth
 Route::group(['namespace' => 'Auth', 'prefix' => 'auth', 'as' => ''], function () {
 
     // Or - UserController@store
@@ -34,5 +35,5 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'auth', 'as' => ''], function (
 
     // Generate password reset token
     Route::post('password/token', 'PasswordController@token')->middleware(['auth.client:reset-password']);
-    Route::post('password/reset', 'PasswordController@reset')->middleware(['auth.client:reset-password']);
+    Route::put('password/reset', 'PasswordController@reset')->middleware(['auth.client:reset-password']);
 });
