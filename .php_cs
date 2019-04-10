@@ -13,6 +13,9 @@ $rules = [
     'blank_line_before_statement' => [
         'statements' => ['return']
     ],
+    'concat_space' => [
+        'spacing' => 'none',
+    ],
     'no_short_echo_tag' => true,
     'no_unused_imports' => true,
     'not_operator_with_successor_space' => true,

@@ -22,7 +22,7 @@ class EmailVerificationControllerTest extends TestCase
 
     protected function invalidVerificationVerifyRoute($id)
     {
-        return route('verification.verify', ['id' => $id]) . '?signature=invalid-signature';
+        return route('verification.verify', ['id' => $id]).'?signature=invalid-signature';
     }
 
     /**
