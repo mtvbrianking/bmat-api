@@ -90,25 +90,20 @@ class EmailVerificationControllerTest extends TestCase
     /**
      * @test
      * @group passing
-     *
-     * @throws \Exception
      */
     public function cant_visit_email_verification_impersonating_other_users()
     {
         $user_1 = factory(User::class)->create([
-            'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
             'email_verified_at' => null,
         ]);
 
         $user_2 = factory(User::class)->create([
-            'id' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
             'email_verified_at' => null,
         ]);
 
         $response = $this->actingAs($user_1)->get($this->validVerificationVerifyRoute($user_2->id));
 
-        // $response->assertForbidden(); <- not passing
-        $response->assertRedirect(route('home'));
+        $response->assertForbidden();
         $this->assertFalse($user_2->fresh()->hasVerifiedEmail());
     }
 
