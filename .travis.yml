@@ -10,7 +10,7 @@ before_script:
   - php artisan config:clear
 
 script:
- - vendor/bin/phpunit --group=passing
+ - vendor/bin/phpunit --group=passing --coverage-text --coverage-clover=coverage.clover
 
 # https://docs.travis-ci.com/user/notifications
 notifications:
