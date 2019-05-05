@@ -1,0 +1,70 @@
+// Buttons
+
+button:focus {
+    outline: 0;
+}
+
+.btn {
+    @apply py-2 px-4 font-normal rounded-full;
+}
+
+.btn-blue {
+    @apply bg-blue text-white;
+}
+
+.btn-blue:hover {
+    @apply bg-blue-dark;
+}
+
+.btn-outline-blue {
+    @apply bg-white text-blue border-2 border-blue-light;
+}
+
+.btn-outline-blue:hover {
+    @apply bg-blue text-white;
+}
+
+// Inputs
+
+input {
+    @apply p-2 border-b-2 border-grey;
+}
+
+input:focus {
+    outline: none;
+    @apply border-b-2 border-blue-light;
+}
+
+// Checkboxes, Radio buttons
+
+// https://codepen.io/sans383/pen/epOKKj
+
+input[type="checkbox"],
+input[type="radio"] {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+}
+
+input[type="checkbox"]+label::before,
+input[type="radio"]+label::before {
+    content: '\a0';
+    display: inline-block;
+    margin: 0.2em .5em .2em 0;
+    width: 1em;
+    height: 1em;
+    line-height: .75em;
+    transition: all .5s;
+    border: 1px solid silver;
+}
+
+input[type="radio"]+label::before {
+    border-radius: 50%;
+}
+
+input[type="checkbox"]:checked+label::before,
+input[type="radio"]:checked+label::before {
+    content: '\a0';
+    background: #6cb2eb;
+    border: 1px solid white;
+    box-shadow: inset 0 0 0 1px white, 0 0 0 1px #3490dc;
+}

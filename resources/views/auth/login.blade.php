@@ -1,71 +1,86 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+    {{-- CSRF Token --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-                        <div class="form-group row">
-                            <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+    {{-- Fonts --}}
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+    {{-- Styles --}}
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+    @yield('extra-css')
+</head>
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+<body class="font-sans bg-grey-lighter">
+<div id="app">
+    <div class="container mx-auto min-h-screen flex justify-center items-center">
+        <div class="mb-4 sm:w-5/6 md:w-1/2 lg:w-1/3 xl:w-1/3">
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+            <h1 class="text-grey-dark text-center font-medium text-5xl uppercase mb-4">bmat api</h1>
 
-                                @if ($errors->has('password'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+            <form method="POST" action="{{ route('login') }}" class="bg-white shadow-md rounded p-8 mb-4">
 
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                @csrf
 
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
-                                </a>
-                            </div>
-                        </div>
-                    </form>
+                <div class="mb-4">
+                    <label class="block text-grey-darkest text-sm" for="email">
+                        {{ __('E-Mail Address') }}
+                    </label>
+                    <input class="w-full" id="email" name="email" type="email" value="{{ old('email') }}" required autofocus>
+                    @if ($errors->has('email'))
+                        <span class="text-red" role="alert">
+                            <small>{{ $errors->first('email') }}</small>
+                        </span>
+                    @endif
                 </div>
+
+                <div class="mb-4">
+                    <label class="block text-grey-darkest text-sm" for="password">
+                        {{ __('Password') }}
+                    </label>
+                    <input class="w-full" id="password" name="password" type="password" required>
+                </div>
+
+                <div class="flex items-center justify-between mb-4">
+                    <div class="">
+                        <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}/>
+                        <label class="text-grey-darkest text-sm" for="remember">{{ __('Remember Me') }}</label>
+                    </div>
+                    <a class="inline-block align-baseline text-sm text-blue hover:text-blue-darker"
+                       href="{{ route('password.request') }}">
+                        {{ __('Forgot Password?') }}
+                    </a>
+                </div>
+
+                <div class="">
+                    <button class="btn btn-outline-blue w-full" type="submit">
+                        {{ __('Sign In') }}
+                    </button>
+                </div>
+
+            </form>
+            <div class="w-full">
+                <p class="text-center text-grey text-sm">
+                    Don’t have an account? <a class="inline-block align-baseline text-blue hover:text-blue-darker"
+                   href="{{ route('register') }}">{{ __('Sign Up') }}</a>
+                </p>
             </div>
         </div>
     </div>
 </div>
-@endsection
+
+{{-- Scripts --}}
+<script src="{{ asset('js/app.js') }}"></script>
+
+@stack('extra-js')
+
+</body>
+</html>

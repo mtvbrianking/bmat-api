@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home'); // ->middleware('verified')
 
 Route::get('/usage', 'HomeController@showApiUsageDoc')->name('doc.usage');
 
@@ -19,8 +19,6 @@ Route::get('/source', 'HomeController@showSourceCodeDoc')->name('doc.source');
 
 Route::get('/routes', 'HomeController@showAppRoutes')->name('routes');
 
-// Illuminate\Routing\Router@auth
-// Illuminate\Routing\Router@emailVerification
 Route::group(['namespace' => 'Auth', 'prefix' => '', 'as' => ''], function () {
 
     // Registration Routes...

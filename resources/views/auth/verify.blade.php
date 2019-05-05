@@ -1,24 +1,68 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
+    {{-- CSRF Token --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-                <div class="card-body">
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    {{-- Fonts --}}
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    {{-- Styles --}}
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    @yield('extra-css')
+</head>
+
+<body class="font-sans bg-grey-lighter">
+<div id="app">
+    <div class="container mx-auto min-h-screen flex justify-center items-center">
+        <div class="mb-4 sm:w-5/6 md:w-1/2 lg:w-1/3 xl:w-1/3">
+
+            <h1 class="text-grey-dark text-center font-medium text-5xl uppercase mb-4">bmat api</h1>
+
+            <div class="bg-white shadow-md rounded p-8 mb-4">
+
+                <h2 class="text-grey-dark font-normal text-lg uppercase mb-5 border-b">{{ __('Verify Your Email Address') }}</h2>
+
+                @if (session('resent'))
+                    <div class="bg-green-lightest border-l-4 border-green text-green-darkest p-2 shadow-md mb-4" role="alert">
+                        <div class="flex items-center justify-between">
+                            <p class="text-sm">{{ __('A fresh verification link has been sent to your email address.') }}</p>
                         </div>
-                    @endif
+                        <div class="ml-2 hidden">
+                            <svg class="fill-current text-green-dark" role="button" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path fill="none" d="M0 0h24v24H0V0z"/>
+                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+                            </svg>
+                        </div>
+                    </div>
+                @endif
 
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }}, <a href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>.
-                </div>
+                <p class="mb-4 text-grey-darker">{{ __('Before proceeding, please check your email for a verification link.') }}</p>
+
+                <p class="text-grey-darker">{{ __('If you did not receive the email') }}, <a class="align-baseline text-blue-light hover:text-blue-dark" href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>.</p>
+
+            </div>
+            <div class="w-full">
+                <p class="text-center text-grey text-sm">
+                    Remembered your password? <a class="inline-block align-baseline text-blue hover:text-blue-darker"
+                   href="{{ route('login') }}">{{ __('Sign In') }}</a>
+                </p>
             </div>
         </div>
     </div>
 </div>
-@endsection
+
+{{-- Scripts --}}
+<script src="{{ asset('js/app.js') }}"></script>
+
+@stack('extra-js')
+
+</body>
+</html>
