@@ -30,8 +30,8 @@
 
                 @csrf
 
-                <div class="mb-4">
-                    <label class="block text-grey-darkest text-sm" for="email">
+                <div class="mb-5">
+                    <label class="block text-grey-darkest" for="email">
                         {{ __('E-Mail Address') }}
                     </label>
                     <input class="w-full" id="email" name="email" type="email" value="{{ old('email') }}" required autofocus>
@@ -42,38 +42,44 @@
                     @endif
                 </div>
 
-                <div class="mb-4">
-                    <label class="block text-grey-darkest text-sm" for="password">
+                <div class="mb-5">
+                    <label class="block text-grey-darkest" for="password">
                         {{ __('Password') }}
                     </label>
                     <input class="w-full" id="password" name="password" type="password" required>
                 </div>
 
-                <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-between mb-5">
                     <div class="">
                         <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}/>
-                        <label class="text-grey-darkest text-sm" for="remember">{{ __('Remember Me') }}</label>
+                        <label class="text-grey-darkest" for="remember">{{ __('Remember Me') }}</label>
                     </div>
-                    <a class="inline-block align-baseline text-sm text-blue hover:text-blue-darker"
+                    <a class="inline-block align-baseline text-blue hover:text-blue-darker"
                        href="{{ route('password.request') }}">
                         {{ __('Forgot Password?') }}
                     </a>
                 </div>
 
-                <div class="">
+                <div class="mb-5">
                     <button class="btn btn-outline-blue w-full" type="submit">
                         {{ __('Sign In') }}
                     </button>
                 </div>
 
+                <div class="w-full">
+                    <p class="text-center text-grey-dark">
+                        Don’t have an account? <a class="inline-block align-baseline text-blue hover:text-blue-darker"
+                       href="{{ route('register') }}">{{ __('Sign Up') }}</a>
+                    </p>
+                </div>
             </form>
-            <div class="w-full">
-                <p class="text-center text-grey text-sm">
-                    Don’t have an account? <a class="inline-block align-baseline text-blue hover:text-blue-darker"
-                   href="{{ route('register') }}">{{ __('Sign Up') }}</a>
-                </p>
-            </div>
         </div>
+    </div>
+    <div class="w-full -mt-8">
+        <p class="text-center text-grey">
+            &copy;<a href="http://bmatovu.com" class="text-blue-light hover:text-blue no-underline">bmatovu</a>
+            All rights reserved.
+        </p>
     </div>
 </div>
 

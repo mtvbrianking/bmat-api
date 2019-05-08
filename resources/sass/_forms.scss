@@ -24,14 +24,22 @@ button:focus {
     @apply bg-blue text-white;
 }
 
+// Labels
+
+label.required::after {
+    // color: #d93025;
+    @apply text-red-dark;
+    content: " *";
+}
+
 // Inputs
 
 input {
-    @apply p-2 border-b-2 border-grey;
+    outline: none;
+    @apply p-2 border-b border-grey;
 }
 
 input:focus {
-    outline: none;
     @apply border-b-2 border-blue-light;
 }
 

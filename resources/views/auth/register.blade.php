@@ -31,7 +31,7 @@
                 @csrf
 
                 <div class="mb-4">
-                    <label class="block text-grey-darkest text-sm" for="name">
+                    <label class="block text-grey-darkest text-sm required" for="name">
                         {{ __('Name') }}
                     </label>
                     <input class="w-full" id="name" name="name" type="text" value="{{ old('name') }}" required autofocus>
@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="mb-4">
-                    <label class="block text-grey-darkest text-sm" for="email">
+                    <label class="block text-grey-darkest text-sm required" for="email">
                         {{ __('E-Mail Address') }}
                     </label>
                     <input class="w-full" id="email" name="email" type="email" value="{{ old('email') }}" required>
@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="mb-4">
-                    <label class="block text-grey-darkest text-sm" for="password">
+                    <label class="block text-grey-darkest text-sm required" for="password">
                         {{ __('Password') }}
                     </label>
                     <input class="w-full" id="password" name="password" type="password" required>
@@ -87,6 +87,12 @@
                 </p>
             </div>
         </div>
+    </div>
+    <div class="w-full -mt-8">
+        <p class="text-center text-sm text-grey">
+            &copy;<a href="http://bmatovu.com" class="text-blue-light hover:text-blue no-underline">bmatovu</a>
+            All rights reserved.
+        </p>
     </div>
 </div>
 

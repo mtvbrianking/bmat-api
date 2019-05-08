@@ -6222,14 +6222,19 @@ button:focus {
   color: #fff;
 }
 
+label.required::after {
+  color: #cc1f1a;
+  content: " *";
+}
+
 input {
+  outline: none;
   padding: .5rem;
-  border-bottom-width: 2px;
+  border-bottom-width: 1px;
   border-color: #b8c2cc;
 }
 
 input:focus {
-  outline: none;
   border-bottom-width: 2px;
   border-color: #6cb2eb;
 }
