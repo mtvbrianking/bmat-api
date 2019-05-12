@@ -1,0 +1,130 @@
+@media (min-width: 992px) {
+    .sidebar-icon-only .navbar .navbar-brand-wrapper {
+        width: 4rem;
+    }
+
+    .sidebar-icon-only .navbar .navbar-brand-wrapper .brand-logo {
+        display: none;
+    }
+
+    .sidebar-icon-only .navbar .navbar-menu-wrapper {
+        width: calc(100% - 4rem);
+    }
+
+    .sidebar-icon-only .sidebar {
+        width: 4rem;
+    }
+
+    .sidebar-icon-only .main-panel {
+        width: calc(100% - 4rem);
+    }
+}
+
+body {
+    overflow-y: hidden;
+}
+
+.sidebar {
+    height: 100vh;
+    overflow: auto;
+    transition: width 0.25s ease, background 0.25s ease;
+    -webkit-transition: width 0.25s ease, background 0.25s ease;
+    -moz-transition: width 0.25s ease, background 0.25s ease;
+    -ms-transition: width 0.25s ease, background 0.25s ease;
+}
+
+.main-panel {
+    height: 100vh;
+    overflow: auto;
+    transition: width 0.25s ease, margin 0.25s ease;
+    -webkit-transition: width 0.25s ease, background 0.25s ease;
+    -moz-transition: width 0.25s ease, background 0.25s ease;
+    -ms-transition: width 0.25s ease, background 0.25s ease;
+}
+
+// Scroll bar
+/* https://codepen.io/devstreak/pen/dMYgeO */
+
+/* width */
+.stylish-scroll-bar::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.stylish-scroll-bar::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+/* Handle */
+.stylish-scroll-bar::-webkit-scrollbar-thumb {
+  background: #dae1e7;
+}
+
+/* Handle on hover */
+.stylish-scroll-bar::-webkit-scrollbar-thumb:hover {
+  background: #8795a1;
+}
+
+// Search bar
+
+.search-bar {
+    @apply rounded-full;
+    // outline: none;s
+    // @apply p-2 border-b border-grey;
+}
+
+.search-bar:focus {
+    // @apply border-b-2 border-blue-light;
+}
+
+// .............................
+
+
+
+.hor-menu-wrapper {
+
+    ul ul {
+        display: none;
+        position: absolute;
+        right: 0;
+    }
+
+    .menu li:hover>ul {
+        display: block;
+        min-width: 150px;
+    }
+
+    .sub-menu li {
+        display: flex;
+    }
+
+    ul ul ul {
+        margin: 0 0 0 100%;
+    }
+
+}
+
+.sidebar {
+
+    ul {
+        // padding: 5px;
+    }
+
+    ul > li {
+        padding: 5px;
+    }
+
+    ul.menu {
+        display: flex;
+        flex-direction: column;
+    }
+
+    ul ul {
+        display: none;
+    }
+
+    ul li:hover>ul {
+        display: block;
+    }
+
+}

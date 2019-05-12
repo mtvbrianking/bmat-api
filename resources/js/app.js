@@ -1,5 +1,19 @@
 
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+
+require('./bootstrap');
+
 window.Vue = require('vue');
+
+/**
+ * Issues:
+ * - Chrome Dev Toola not showing
+ * https://github.com/vuejs/vue-devtools/issues/62#issuecomment-166890394
+ */
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -25,5 +39,13 @@ Vue.component(
 );
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data: {
+        name: 'John Doe'
+    },
+    methods: {
+        greet: function (event) {
+            alert('Hello ' + this.name + '!')
+        }
+    }
 });

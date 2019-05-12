@@ -34,7 +34,7 @@
                     <label class="block text-grey-darkest" for="email">
                         {{ __('E-Mail Address') }}
                     </label>
-                    <input class="w-full" id="email" name="email" type="email" value="{{ old('email') }}" required autofocus>
+                    <input class="w-full floating" id="email" name="email" type="email" value="{{ old('email') }}" required autofocus>
                     @if ($errors->has('email'))
                         <span class="text-red" role="alert">
                             <small>{{ $errors->first('email') }}</small>
@@ -46,7 +46,7 @@
                     <label class="block text-grey-darkest" for="password">
                         {{ __('Password') }}
                     </label>
-                    <input class="w-full" id="password" name="password" type="password" required>
+                    <input class="w-full floating" id="password" name="password" type="password" required>
                 </div>
 
                 <div class="flex items-center justify-between mb-5">

@@ -27,7 +27,6 @@ button:focus {
 // Labels
 
 label.required::after {
-    // color: #d93025;
     @apply text-red-dark;
     content: " *";
 }
@@ -36,10 +35,14 @@ label.required::after {
 
 input {
     outline: none;
-    @apply p-2 border-b border-grey;
+    @apply p-2;
 }
 
-input:focus {
+input.floating {
+    @apply border-0 border-b border-grey;
+}
+
+input.floating:focus {
     @apply border-b-2 border-blue-light;
 }
 
@@ -47,14 +50,14 @@ input:focus {
 
 // https://codepen.io/sans383/pen/epOKKj
 
-input[type="checkbox"],
-input[type="radio"] {
+input[type=checkbox],
+input[type=radio] {
     position: absolute;
     clip: rect(0, 0, 0, 0);
 }
 
-input[type="checkbox"]+label::before,
-input[type="radio"]+label::before {
+input[type=checkbox]+label::before,
+input[type=radio]+label::before {
     content: '\a0';
     display: inline-block;
     margin: 0.2em .5em .2em 0;
@@ -65,12 +68,12 @@ input[type="radio"]+label::before {
     border: 1px solid silver;
 }
 
-input[type="radio"]+label::before {
+input[type=radio]+label::before {
     border-radius: 50%;
 }
 
-input[type="checkbox"]:checked+label::before,
-input[type="radio"]:checked+label::before {
+input[type=checkbox]:checked+label::before,
+input[type=radio]:checked+label::before {
     content: '\a0';
     background: #6cb2eb;
     border: 1px solid white;
